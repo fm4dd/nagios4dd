@@ -626,7 +626,7 @@ sub import_pnp_graph {
   $tstart = ($tstamp - $elapse);
 
   # generate temporary graph file
-  my $fhandle = File::Temp->new(UNLINK =>1) or verb("create_graph_img: Cannot create temporary image file.");
+  my $fhandle = File::Temp->new(UNLINK =>1) or verb("import_pnp_graph: Cannot create temporary image file.");
   $fhandle->autoflush(1);
   $tmpfile = $fhandle->filename;
 
@@ -643,7 +643,7 @@ sub import_pnp_graph {
 
   my $res = $ua->get($img_get);
   if ($res->is_success) {
-    verb("create_graph_img: Downloaded PNP4Nagios image file. Server response: ".$res->status_line."\n");
+    verb("import_pnp_graph: Downloaded PNP4Nagios image file. Server response: ".$res->status_line."\n");
     # write the graph file to $tmpfile and set the graph format
     print $fhandle $res->content;
     $graph_type = "png";
@@ -659,14 +659,14 @@ sub import_pnp_graph {
     }
 
     $graph_img = b64encode_img($tmpfile);
-    verb("create_graph_img: Encoded PNP4Nagios image file, format: ".$graph_type."\n");
+    verb("import_pnp_graph: Encoded PNP4Nagios image file, format: ".$graph_type."\n");
   # Next is what we do if we cannot get a image from PNP4Nagios
   } else {
-    verb("create_graph_img: Cannot download PNP4Nagios image file. Server response: ".$res->status_line);
+    verb("import_pnp_graph: Cannot download PNP4Nagios image file. Server response: ".$res->status_line);
     # In this case, we create a 1x1px empty image to be included
     $graph_type = "gif";
     $graph_img = $empty_img;
-    verb("create_graph_img: Returning empty image file, format: ".$graph_type."\n");
+    verb("import_pnp_graph: Returning empty image file, format: ".$graph_type."\n");
   }
   return $graph_img;
 }
@@ -716,7 +716,7 @@ $mail{subject} = set_subject();
 # $mail{auth} = {user => "<username>", password => "<mailpw>", method="">"LOGIN PLAIN", required=>1};
 
 if ($o_format eq "graph") {
-  verb("main: trying to create the a PNP4Nagios graph image.");
+  verb("main: trying to create the PNP4Nagios graph image.");
   $graph_img = import_pnp_graph();
 }
 

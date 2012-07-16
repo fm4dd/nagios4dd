@@ -585,7 +585,7 @@ sub import_pnp_graph {
   $tstart = ($tstamp - $elapse);
 
   # generate temporary graph file
-  my $fhandle = File::Temp->new(UNLINK =>1) or verb("create_graph_img: Cannot create temporary image file.");
+  my $fhandle = File::Temp->new(UNLINK =>1) or verb("import_pnp_graph: Cannot create temporary image file.");
   $fhandle->autoflush(1);
   $tmpfile = $fhandle->filename;
 
@@ -601,7 +601,7 @@ sub import_pnp_graph {
   $img_get = "$pnp4nagios_url/image?host=" . urlencode($o_hostname) . "&srv=_HOST_&source=0&start=$tstart&end=$tstamp";
   my $res = $ua->get($img_get);
   if ($res->is_success) {
-    verb("create_graph_img: Downloaded PNP4Nagios image file. Server response: ".$res->status_line."\n");
+    verb("import_pnp_graph: Downloaded PNP4Nagios image file. Server response: ".$res->status_line."\n");
     # write the graph file to $tmpfile and set the graph format
     print $fhandle $res->content;
     $graph_type = "png";
@@ -617,14 +617,14 @@ sub import_pnp_graph {
     }
 
     $graph_img = b64encode_img($tmpfile);
-    verb("create_graph_img: Encoded PNP4Nagios image file, format: ".$graph_type."\n");
+    verb("import_pnp_graph: Encoded PNP4Nagios image file, format: ".$graph_type."\n");
   # Next is what we do if we cannot get a image from PNP4Nagios
   } else {
-    verb("create_graph_img: Cannot download PNP4Nagios image file. Server response: ".$res->status_line);
+    verb("import_pnp_graph: Cannot download PNP4Nagios image file. Server response: ".$res->status_line);
     # In this case, we create a 1x1px empty image to be included
     $graph_type = "gif";
     $graph_img = $empty_img;
-    verb("create_graph_img: Returning empty image file, format: ".$graph_type."\n");
+    verb("import_pnp_graph: Returning empty image file, format: ".$graph_type."\n");
   }
   return $graph_img;
 }
@@ -634,19 +634,26 @@ sub import_pnp_graph {
 # ########################################################################
 sub set_subject {
   my $subject;
-  my $jp_b64 = "";
+  my $b64_sub = "";
 
   # special base64 encoding is required for subject parts send in Japanese
   if ($land eq "jp") {
-    $jp_b64 = " =?utf-8?B?" . encode_base64("ホスト $o_hostname($o_hostgroup)は");
-    chomp $jp_b64;
-    $jp_b64 = $jp_b64 . "?= ";
+    $b64_sub = " =?utf-8?B?" . encode_base64("ホスト $o_hostname($o_hostgroup)は");
+    chomp $b64_sub;
+    $b64_sub = $b64_sub . "?= ";
+  }
+
+  # special base64 encoding is required for subject parts send in French
+  if ($land eq "fr") {
+    $b64_sub = " =?utf-8?B?" . encode_base64("d\'hôte $o_hostname ($o_hostgroup) est");
+    chomp $b64_sub;
+    $b64_sub = $b64_sub . "?= ";
   }
 
   my %lang =  ('en' => "Nagios: $o_notificationtype Host $o_hostname ($o_hostgroup) is $o_hoststate",
                'de' => "Nagios: $o_notificationtype System $o_hostname($o_hostgroup) ist $o_hoststate",
-               'jp' => "Nagios: $o_notificationtype" . $jp_b64 . "$o_hoststate",
-               'fr' => "Nagios: $o_notificationtype d\'hôte $o_hostname ($o_hostgroup) est $o_hoststate" );
+               'jp' => "Nagios: $o_notificationtype" . $b64_sub . "$o_hoststate",
+               'fr' => "Nagios: $o_notificationtype" . $b64_sub . "$o_hoststate" );
 
   if (!defined($lang{$land})) { $subject = $lang{'en'}; }
   else { $subject = $lang{$land}; }
@@ -674,7 +681,7 @@ $mail{subject} = set_subject();
 # $mail{auth} = {user => "<username>", password => "<mailpw>", method="">"LOGIN PLAIN", required=>1};
 
 if ($o_format eq "graph") {
-  verb("main: trying to create the a PNP4Nagios graph image.");
+  verb("main: trying to create the PNP4Nagios graph image.");
   $graph_img = import_pnp_graph();
 }
 
