@@ -3,7 +3,7 @@
 # First we explicitly switch off the Nagios embbeded Perl Interpreter
 # nagios: -epn
 # ############################ pnp4n_send_host_mail.pl ################ #
-# Date    : May 27, 2012                                                #
+# Date    : May 29, 2012                                                #
 # Purpose : Script to send out Nagios e-mails.\n";                      #
 # Author  : Frank Migge (support at frank4dd dot com)                   #
 # Help    : http://nagios.frank4dd.com/howto                            #
@@ -39,11 +39,11 @@ use MIME::Base64;
 use File::Temp;
 use strict;
 use warnings;
-use vars qw( $logo_id $graph_id $tmpfile $land $tbl $var %param_vars
-             $elapse $tstamp $tstart $img_get);
+use vars qw( $logo_id $graph_id $tmpfile $land $tbl $var
+             %param_vars $elapse $tstamp $tstart $img_get);
 
 # The version of this script
-my $Version            ='1.7.1';
+my $Version            ='1.7.2';
 # the sender e-mail address to be seen by recipients
 my $mail_sender        = "Nagios Monitoring <nagios\@frank4dd.com>";
 # The Nagios CGI URL for integrated links
@@ -63,13 +63,13 @@ my $html_style         = "body {text-align: center; font-family: Verdana, sans-s
 my $table_size         = "600px";
 my $header_size        = "180px";
 my $data_size          = "420px";
-my $debugtables        = "</br>\n";
+my $debugtables        = "<br>\n";
 
 # ########################################################################
 # For tests using the -t/--test option, if we want to see PNP4Nagios
 # graphs we need to set a valid host name and service name below.
 # ########################################################################
-my $test_host = "susie114";       # existing host in PNP4Nagios
+my $test_host          = "susie114"; # existing host in PNP4Nagios
 
 # ########################################################################
 # Here we set the URL to pick up the RRD data files for the optional graph
@@ -229,6 +229,10 @@ my $graph_img          = undef; # base64-encoded graph
 my $graph_type         = undef; # graph image file format (jpg, gif, or png)
 my $boundary           = undef; # unique string for multi-part emails
 my %mail;
+
+# $empty_img is a base64-encoded, white 1x1 pixel gif image, we
+# use it if the logo or the pnp4nagios graph cannot be found.
+my $empty_img          = "R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICTAEAOw==";
 
 # ########################################################################
 # subroutine defintions below
@@ -427,11 +431,11 @@ sub create_test_data {
 # ########################################################################
 sub create_message_text {
   $text_msg = $language{$land}{'L'}."\n"
-               . "=====================================\n\n";
+            . "=====================================\n\n";
 
   # if customer name was given for service providers, display it here
   if ( defined($o_customer)) {
-    $text_msg = $text_msg . $language{$land}{'A'} . ": $o_customer\n";
+    $text_msg .= $language{$land}{'A'} . ": $o_customer\n";
   }
 
   $text_msg = $text_msg
@@ -444,16 +448,16 @@ sub create_message_text {
             . $language{$land}{'H'} . ": $o_datetime\n"
             . $language{$land}{'I'} . ": $o_hostoutput\n\n";
 
-  # if author and comment data has been passed from nagios
+  # if author and comment data has been passed from Nagios
   # and these variables have content, then we add two more columns
   if ( ( defined($o_notificationauth) && defined($o_notificationcmt) ) &&
        ( ($o_notificationauth ne "") && ($o_notificationcmt ne "") ) ) {
-    $text_msg = $text_msg . $language{$land}{'J'} . ": $o_notificationauth\n"
+    $text_msg .= $language{$land}{'J'} . ": $o_notificationauth\n"
               . $language{$land}{'K'} . ": $o_notificationcmt\n\n";
 
   }
 
-  $text_msg = $text_msg . "-------------------------------------\n"
+  $text_msg .=  "-------------------------------------\n"
             . $language{$land}{'M'} . "\n";
 }
 
@@ -466,16 +470,14 @@ sub create_message_html {
             . "<table width=$table_size><tr>\n";
 
   if ($o_format eq "multi" || $o_format eq "graph") {
-    $logo_id  = create_content_id();
-    $html_msg = $html_msg . "<td><img class=\"logo\" src=\"cid:$logo_id\"></td>"
-              . "<td><span>$language{$land}{'L'}</span></td></tr><tr>\n";
+    $logo_id   = create_content_id();
+    $html_msg .= "<td><img class=\"logo\" src=\"cid:$logo_id\"></td>"
+              .  "<td><span>$language{$land}{'L'}</span></td></tr><tr>\n";
   } else {
-    $html_msg = $html_msg
-              . "<th colspan=2><span>$language{$land}{'L'}</span></th></tr><tr>\n"; }
+    $html_msg .= "<th colspan=2><span>$language{$land}{'L'}</span></th></tr><tr>\n"; }
 
   if ( defined($o_customer)) {
-    $html_msg = $html_msg
-              . "<th colspan=2 class=customer>$o_customer</th></tr><tr>\n"; }
+    $html_msg .= "<th colspan=2 class=customer>$o_customer</th></tr><tr>\n"; }
 
   $html_msg = $html_msg
             . "<th width=$header_size class=even>$language{$land}{'B'}:</th>\n"
@@ -485,62 +487,63 @@ sub create_message_html {
             . "<tr><th class=even>$language{$land}{'D'}:</th><td class=even>\n";
 
   if (defined($o_addurl)) {
-    $html_msg = $html_msg
-                 . "<a href=\"$nagios_cgiurl/status.cgi?host=$o_hostname&style=detail\">$o_hostname</a>";
-  } else { $html_msg  = $html_msg . $o_hostname; }
+    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?host=$o_hostname&style=detail\">$o_hostname</a>";
+  } else { $html_msg .= $o_hostname; }
   
   $html_msg = $html_msg . "</td></tr>\n"
-               . "<tr><th class=odd>$language{$land}{'E'}:</th><td>$o_hostalias</td></tr>\n"
-               . "<tr><th class=even>$language{$land}{'F'}:</th><td class=even>$o_hostaddress</td></tr>\n"
-               . "<tr><th class=odd>$language{$land}{'G'}:</th><td>\n";
+            . "<tr><th class=odd>$language{$land}{'E'}:</th><td>$o_hostalias</td></tr>\n"
+            . "<tr><th class=even>$language{$land}{'F'}:</th><td class=even>$o_hostaddress</td></tr>\n"
+            . "<tr><th class=odd>$language{$land}{'G'}:</th><td>\n";
   
   if (defined($o_addurl)) {
     $html_msg = $html_msg
-                 . "<a href=\"$nagios_cgiurl/status.cgi?hostgroup=$o_hostgroup&style=overview\">$o_hostgroup</a>";
-  } else { $html_msg = $html_msg . $o_hostgroup; }
+              . "<a href=\"$nagios_cgiurl/status.cgi?hostgroup=$o_hostgroup&style=overview\">$o_hostgroup</a>";
+  } else { $html_msg .= $o_hostgroup; }
   
   $html_msg = $html_msg . "</td></tr>\n"
-               . "<tr><th class=odd>$language{$land}{'H'}:</th><td>$o_datetime</td></tr>\n"
-               . "<tr><th class=even>$language{$land}{'I'}:</th><td class=even>\n";
+             . "<tr><th class=even>$language{$land}{'H'}:</th><td class=even>$o_datetime</td></tr>\n"
+             . "<tr><th class=odd>$language{$land}{'I'}:</th><td>\n";
   
   if (defined($o_addurl)) {
-    $html_msg = $html_msg 
-                 . "<a href=\"$nagios_cgiurl/status.cgi?extinfo.cgi?type=1&host=$o_hostname\">$o_hostoutput</a>\n";
+    $html_msg .=  "<a href=\"$nagios_cgiurl/status.cgi?extinfo.cgi?type=1&host=$o_hostname\">$o_hostoutput</a>\n";
+    # If the graph image wasn't empty, We add an additional link for PNP4Nagios
+    if ($o_format eq "graph" && $graph_type ne "gif") {
+      $html_msg .=  ", see also <a href=\"$pnp4nagios_url/graph?host=$o_hostname&srv=_HOST_\">PNP4Nagios</a>\n"; }
   } else { $html_msg = $html_msg . $o_hostoutput; }
   
   $html_msg = $html_msg . "</td></tr>\n";
 
-  # If the author and comment data has been passed from Nagios
+  # If the author and comment data has been passed from nagios
   # and these variables have content, then we add two more columns
   if ( ( defined($o_notificationauth) && defined($o_notificationcmt) ) &&
        ( ($o_notificationauth ne "") && ($o_notificationcmt ne "") ) ) {
-    $html_msg = $html_msg . "<tr><th class=even>$language{$land}{'J'}:</th>\n"
+    $html_msg .=  "<tr><th class=even>$language{$land}{'J'}:</th>\n"
               . "<td class=even>$o_notificationauth</td></tr>\n"
               . "<tr><th class=odd>$language{$land}{'K'}:</th>\n"
               . "<td>$o_notificationcmt</td></tr>\n";
   }
 
-  $html_msg = $html_msg . "</table></br>\n";
+  $html_msg .= "</table><br>\n";
 
   # if we got the graph format and a image has been generated, we add it here
   if (defined($graph_img) && $o_format eq "graph") {
     $graph_id = create_content_id();
-    $html_msg = $html_msg . "<img src=\"cid:$graph_id\">\n";
+    $html_msg .= "<img src=\"cid:$graph_id\">\n";
   }
 
   # add the Nagios footer tag line here
-  $html_msg = $html_msg . "</br><hr>\n$language{$land}{'M'}\n<hr>\n";
+  $html_msg .= "<br><hr>\n$language{$land}{'M'}\n<hr>\n";
 
   # add the extra debugtables if verbose output had been requested,
   # or if the notification command contains the keyword "email-debug"
   if (defined($o_notificationcmt) && ($o_notificationcmt =~ m/email-debug/i)
   || defined($o_verb)) {
     &create_debugtable;
-    $html_msg = $html_msg . $debugtables;
+    $html_msg .= $debugtables;
   }
 
   # End HTML message definition
-  $html_msg = $html_msg . "</body></html>\n";
+  $html_msg .= "</body></html>\n";
 }
 
 # #######################################################################
@@ -616,7 +619,7 @@ sub import_pnp_graph {
     verb("create_graph_img: Cannot download PNP4Nagios image file. Server response: ".$res->status_line);
     # In this case, we create a 1x1px empty image to be included
     $graph_type = "gif";
-    $graph_img = "R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICTAEAOw==";
+    $graph_img = $empty_img;
     verb("create_graph_img: Returning empty image file, format: ".$graph_type."\n");
   }
   return $graph_img;
@@ -674,20 +677,19 @@ if ($o_format eq "graph") {
 if ($o_format eq "multi" || $o_format eq "graph") {
   verb("main: Sending HTML email (language: $land) with inline logo.");
 
-  # If the logo file cannot be found, we send a 1x1px empty logo image instead
-  $logo_img = "R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICTAEAOw==";
-  $logo_type = "gif";
-
   # check if the logo file exists
   if (-e $logofile) {
     # In e-mails, images need to be base64 encoded, we encode the logo here
     $logo_img = b64encode_img($logofile);
     # extract the image format from the file extension
     $logo_type = ($logofile =~ m/([^.]+)$/)[0];
-    verb("main: Converted inline logo to base64 and set type to $logo_type.");
+    verb("main: Converted logo data to base64 and set type to $logo_type.");
     # create the second boundary marker for the logo
   } else {
-    verb("main: Empty logo, could not find inline logo file at $logofile.");
+    verb("main: Could not find logo file at $logofile, setting empty logo.");
+    # If the logo file cannot be found, we send a 1x1px empty logo image instead
+    $logo_img = $empty_img;
+    $logo_type = "gif";
   }
 
   create_boundary();
@@ -722,6 +724,7 @@ if ($o_format eq "multi" || $o_format eq "graph") {
                   . "Content-Disposition: inline; filename=\"graph.$graph_type\"\n\n"
                   . "$graph_img\n";
    }
+
    # create the final end boundary marker
    $mail_content = $mail_content . $boundary . "--\n";
    # put the completed message body into the mail
@@ -794,7 +797,7 @@ sub create_debugtable() {
 
   # loop to display the script variable tables
   foreach $tbl (keys %param_vars) {
-    $debugtables .= "</br>\n"
+    $debugtables .= "<br>\n"
                  . "<table width=$table_size>\n"
                  . "<tr><th colspan=2 class=customer>$param_vars{$tbl}->{'title'}</th></tr>\n";
 
@@ -814,7 +817,7 @@ sub create_debugtable() {
       }
     }
     $debugtables .= "</table>";
-    $debugtables .="</br>\n";
+    $debugtables .="<br>\n";
   }
 }
 # ##################### End of pnp4n_send_host_mail.pl ####################
