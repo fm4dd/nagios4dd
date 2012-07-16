@@ -43,7 +43,7 @@ use vars qw( $logo_id $graph_id $tmpfile $land $tbl $var
              %param_vars $elapse $tstamp $tstart $img_get);
 
 # The version of this script
-my $Version            ='1.7.2';
+my $Version            ='1.7.3';
 # the sender e-mail address to be seen by recipients
 my $mail_sender        = "Nagios Monitoring <nagios\@frank4dd.com>";
 # The Nagios CGI URL for integrated links
@@ -487,7 +487,7 @@ sub create_message_html {
             . "<tr><th class=even>$language{$land}{'D'}:</th><td class=even>\n";
 
   if (defined($o_addurl)) {
-    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?host=$o_hostname&style=detail\">$o_hostname</a>";
+    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?host=" . urlencode($o_hostname) ."&style=detail\">$o_hostname</a>";
   } else { $html_msg .= $o_hostname; }
   
   $html_msg = $html_msg . "</td></tr>\n"
@@ -497,7 +497,7 @@ sub create_message_html {
   
   if (defined($o_addurl)) {
     $html_msg = $html_msg
-              . "<a href=\"$nagios_cgiurl/status.cgi?hostgroup=$o_hostgroup&style=overview\">$o_hostgroup</a>";
+              . "<a href=\"$nagios_cgiurl/status.cgi?hostgroup=" . urlencode($o_hostgroup) ."&style=overview\">$o_hostgroup</a>";
   } else { $html_msg .= $o_hostgroup; }
   
   $html_msg = $html_msg . "</td></tr>\n"
@@ -505,15 +505,16 @@ sub create_message_html {
              . "<tr><th class=odd>$language{$land}{'I'}:</th><td>\n";
   
   if (defined($o_addurl)) {
-    $html_msg .=  "<a href=\"$nagios_cgiurl/status.cgi?extinfo.cgi?type=1&host=$o_hostname\">$o_hostoutput</a>\n";
+
+    $html_msg .=  "<a href=\"$nagios_cgiurl/status.cgi?type=1&host=" . urlencode($o_hostname) . "\">$o_hostoutput</a>\n";
     # If the graph image wasn't empty, We add an additional link for PNP4Nagios
     if ($o_format eq "graph" && $graph_type ne "gif") {
-      $html_msg .=  ", see also <a href=\"$pnp4nagios_url/graph?host=$o_hostname&srv=_HOST_\">PNP4Nagios</a>\n"; }
+      $html_msg .=  ", see also <a href=\"$pnp4nagios_url/graph?host=" . urlencode($o_hostname) ."&srv=_HOST_\">PNP4Nagios</a>\n"; }
   } else { $html_msg = $html_msg . $o_hostoutput; }
   
   $html_msg = $html_msg . "</td></tr>\n";
 
-  # If the author and comment data has been passed from nagios
+  # If the author and comment data has been passed from Nagios
   # and these variables have content, then we add two more columns
   if ( ( defined($o_notificationauth) && defined($o_notificationcmt) ) &&
        ( ($o_notificationauth ne "") && ($o_notificationcmt ne "") ) ) {
@@ -550,8 +551,11 @@ sub create_message_html {
 # urlencode() URL encode a string
 # #######################################################################
 sub urlencode {
-  $_[0] =~ s/([\W])/"%" . uc(sprintf("%2.2x",ord($1)))/eg;
-  return $_[0];
+  my $urldata = $_[0];
+  my $MetaChars = quotemeta( ';,/?\|=+)(*&^%$#@!~`:');
+  $urldata =~ s/([$MetaChars\"\'\x80-\xFF])/"%" . uc(sprintf("%2.2x",         ord($1)))/eg;
+  $urldata =~ s/ /\+/g;
+  return $urldata;
 }
 
 # ########################################################################
@@ -594,7 +598,7 @@ sub import_pnp_graph {
   }
 
   # We are using _HOST_ as the service identifier for graphs added to host notifications
-  $img_get = $pnp4nagios_url."/image?host=$o_hostname&srv=_HOST_&source=0&start=$tstart&end=$tstamp";
+  $img_get = "$pnp4nagios_url/image?host=" . urlencode($o_hostname) . "&srv=_HOST_&source=0&start=$tstart&end=$tstamp";
   my $res = $ua->get($img_get);
   if ($res->is_success) {
     verb("create_graph_img: Downloaded PNP4Nagios image file. Server response: ".$res->status_line."\n");

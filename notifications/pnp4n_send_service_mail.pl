@@ -43,7 +43,7 @@ use vars qw( $logo_id $graph_id $tmpfile $land $tbl $var
              %param_vars $elapse $tstamp $tstart $img_get);
 
 # The version of this script
-my $Version            ='1.7.2';
+my $Version            ='1.7.3';
 # the sender e-mail address to be seen by recipients
 my $mail_sender        = "Nagios Monitoring <nagiosadmin\@frank4dd.com>";
 # The Nagios CGI URL for integrated service links
@@ -189,6 +189,7 @@ my %language = ('en' => { 'A' => 'Customer',
                           'O' => 'このメーセジはオープンソースの監視システムNagiosで生成されています。' });
 
 ####### Global Variables - No changes necessary below this line ##########
+my $o_hostfunction     = $ENV{NAGIOS__HOSTSERVERFUNCTION};
 # Nagios notification type, i.e. PROBLEM
 my $o_notificationtype = $ENV{NAGIOS_NOTIFICATIONTYPE};
 # Nagios notification author (if avail.)
@@ -505,8 +506,10 @@ sub create_message_html {
   # The Servicegroup URL http://<nagios-web>/cgi-bin/status.cgi?servicegroup=$SERVICEGROUPNAME$&style=overview
   # This URL shows the service group table listing ofthe hosts that have this service
   if (defined($o_addurl)) {
-    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?servicegroup=$o_servicegroup&style=overview\">$o_servicegroup</a>";
-  } else { $html_msg  .= $o_servicegroup; }
+    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?servicegroup=" 
+              . urlencode($o_servicegroup) . "&style=overview\">$o_servicegroup</a>";
+  }
+  else { $html_msg  .= $o_servicegroup; }
 
   $html_msg .= "</td></tr>\n"
             . "<tr><th class=odd>$language{$land}{'D'}:</th><td>$o_servicestate</td></tr>\n"
@@ -515,11 +518,15 @@ sub create_message_html {
   # The ServiceOutput URL http://<nagios-web>/cgi-bin/extinfo.cgi?type=2&host=$HOSTNAME$&service=$SERVICEDESC$
   # This URL shows the full service details and commands for service management (ack, re-check, disable, etc)
   if (defined($o_addurl)) {
-    $html_msg .= "<a href=\"$nagios_cgiurl/extinfo.cgi?type=2&host=$o_hostname&service=$o_servicedesc\">$o_serviceoutput</a>\n";
+    $html_msg .= "<a href=\"$nagios_cgiurl/extinfo.cgi?type=2&host=" . urlencode($o_hostname) 
+              . "&service=" . urlencode($o_servicedesc) . "\">$o_serviceoutput</a>\n";
+
     # If the graph image wasn't empty, We add an additional link for PNP4Nagios
     if ($o_format eq "graph" && $graph_type ne "gif") {
-      $html_msg .=  ", see also <a href=\"$pnp4nagios_url/graph?host=$o_hostname&srv=$o_servicedesc\">PNP4Nagios</a>\n"; }
-  } else { $html_msg .= $o_serviceoutput; }
+      $html_msg .=  ", see also <a href=\"$pnp4nagios_url/graph?host=" . urlencode($o_hostname)
+                . "&srv=" . urlencode($o_servicedesc) . "\">PNP4Nagios</a>\n"; }
+  }
+  else { $html_msg .= $o_serviceoutput; }
   
   $html_msg .= "</td></tr>\n"
             .  "<tr><th class=odd>$language{$land}{'G'}:</th><td>\n";
@@ -527,8 +534,10 @@ sub create_message_html {
   # The Hostname URL http://<nagios-web>/cgi-bin/status.cgi?host=$HOSTNAME$&style=detail
   # this URL shows the host and all services underneath it
   if (defined($o_addurl)) {
-    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?host=$o_hostname&style=detail\">$o_hostname</a>";
-  } else { $html_msg .= $o_hostname; }
+    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?host=" . urlencode($o_hostname) 
+              . "&style=detail\">$o_hostname</a>";
+  }
+  else { $html_msg .= $o_hostname; }
   
   $html_msg .= "</td></tr>\n"
             . "<tr><th class=even>$language{$land}{'H'}:</th><td class=even>$o_hostalias</td></tr>\n"
@@ -538,8 +547,10 @@ sub create_message_html {
   # The Hostgroup URL http://<nagios-web>/cgi-bin/status.cgi?hostgroup=$HOSTGROUPNAME$&style=overview
   # This URL shows the hostgroup table listing for all individual hosts that belong to it
   if (defined($o_addurl)) {
-    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?hostgroup=$o_hostgroup&style=overview\">$o_hostgroup</a>";
-  } else { $html_msg .= $o_hostgroup; }
+    $html_msg .= "<a href=\"$nagios_cgiurl/status.cgi?hostgroup=" 
+              . urlencode($o_hostgroup) ."&style=overview\">$o_hostgroup</a>";
+  }
+  else { $html_msg .= $o_hostgroup; }
   
   $html_msg .= "</td></tr>\n"
             .  "<tr><th class=odd>$language{$land}{'K'}:</th><td>$o_datetime</td></tr>\n";
@@ -581,8 +592,11 @@ sub create_message_html {
 # urlencode() URL encode a string
 # #######################################################################
 sub urlencode {
-  $_[0] =~ s/([\W])/"%" . uc(sprintf("%2.2x",ord($1)))/eg;
-  return $_[0];
+  my $urldata = $_[0];
+  my $MetaChars = quotemeta( ';,/?\|=+)(*&^%$#@!~`:');
+  $urldata =~ s/([$MetaChars\"\'\x80-\xFF])/"%" . uc(sprintf("%2.2x",         ord($1)))/eg;
+  $urldata =~ s/ /\+/g;
+  return $urldata;
 }
 
 # ########################################################################
@@ -624,7 +638,9 @@ sub import_pnp_graph {
     $ua->credentials("$server_port", "$auth_name", "$web_user" => "$web_pass");
   }
 
-  $img_get = $pnp4nagios_url."/image?host=$o_hostname&srv=$o_servicedesc&source=0&start=$tstart&end=$tstamp";
+  $img_get = "$pnp4nagios_url/image?host=" . urlencode($o_hostname) . "&srv=" 
+           . urlencode($o_servicedesc) . "&source=0&start=$tstart&end=$tstamp";
+
   my $res = $ua->get($img_get);
   if ($res->is_success) {
     verb("create_graph_img: Downloaded PNP4Nagios image file. Server response: ".$res->status_line."\n");
@@ -781,7 +797,7 @@ exit 0;
 sub create_debugtable() {
   my $varcount = 0;
   my $oddcheck = "odd";
-
+  
   # Check if the following variables are defined
   my %param_vars = (
 		'script'  => {	"title"			=>  'Script debug data',
@@ -819,6 +835,7 @@ sub create_debugtable() {
 				"o_serviceoutput"   	=>  \$o_serviceoutput,
 				"o_datetime"        	=>  \$o_datetime,
 				"o_to_recipients"   	=>  \$o_to_recipients,
+				"o_hostfunction"   	=>  \$o_hostfunction,
 				"o_to_group"        	=>  \$o_to_group },
 	      'pnp4nagios' => {	"title"			=>  'PNP4Nagios debug data',
 				"access URL"		=>  \$pnp4nagios_url,
@@ -843,6 +860,8 @@ sub create_debugtable() {
           $debugtables .= "<td class=$oddcheck>&nbsp;</td></tr>\n";
         } else {
           $debugtables .= "<td class=$oddcheck>${$param_vars{$tbl}->{$var}}</td></tr>\n";
+          # Debugging
+#         print $var . "= " . ${$param_vars{$tbl}->{$var}} . "\n";
         }
         $varcount++;
       }
