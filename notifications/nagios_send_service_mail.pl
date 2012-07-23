@@ -753,7 +753,7 @@ sub create_graph_image {
   $fhandle->autoflush(1);
   $tmpfile = $fhandle->filename;
 
-  my @ds = rrdline($o_hostname,"check-host-alive",$graph_img_size,$G,$rrd_basedir,$tmpfile);
+  my @ds = rrdline($o_hostname,$o_servicedesc,$graph_img_size,$G,$rrd_basedir,$tmpfile);
   verb("sub create_graph_image: RRDs::graph ". join ' ', @ds);
 
   RRDs::graph(@ds);
