@@ -178,7 +178,7 @@ my %language = ('en' => { 'A' => 'Customer',
                           'L' => '投稿者',
                           'M' => 'コメント',
                           'N' => 'Nagios 監視システムの通知',
-                          'O' => 'このメーセジはオープンソースの監視システムNagiosで生成されています。' });
+                          'O' => 'このメッセージはオープンソースの監視システムNagiosで生成されています。' });
 
 ####### Global Variables - No changes necessary below this line ##########
 my $o_hostfunction     = $ENV{NAGIOS__HOSTSERVERFUNCTION};
