@@ -177,7 +177,7 @@ my %language = ('en' => { 'A' => 'Customer',
                           'J' => '投稿者',
                           'K' => 'コメント',
                           'L' => 'Nagios 監視システムの通知',
-                          'M' => 'このメーセジはオープンソースの監視システムNagiosで生成されています。' });
+                          'M' => 'このメッセージはオープンソースの監視システムNagiosで生成されています。' });
 
 ####### Global Variables - No changes necessary below this line ##########
 # Nagios notification type, i.e. PROBLEM
