@@ -2,7 +2,7 @@
 
 Nagios flexible notification scripts
 
-Nagios Core only comes with a barebone structure for plan text-based e-mail alerting. 
+Nagios Core only comes with a barebone structure for plaintext-based e-mail alerting. 
 These add-on scripts take the notification further by adding HTML formatting, color coding, language selections, and more.
 Integration with two popular graphing packages Nagiosgraph and PNP4Nagios adds problem visualization to the alerts.
 
