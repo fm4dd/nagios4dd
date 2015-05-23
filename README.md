@@ -1,4 +1,4 @@
-# nagios4dd
+# nagios4dd - notifications
 
 Nagios flexible notification scripts
 
