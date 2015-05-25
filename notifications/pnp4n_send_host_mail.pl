@@ -3,10 +3,10 @@
 # First we explicitly switch off the Nagios embbeded Perl Interpreter
 # nagios: -epn
 # ############################ pnp4n_send_host_mail.pl ################ #
-# Date    : May 29, 2012                                                #
+# Date    : May 20, 2015                                                #
 # Purpose : Script to send out Nagios e-mails.\n";                      #
 # Author  : Frank Migge (support at frank4dd dot com)                   #
-# Help    : http://nagios.frank4dd.com/howto                            #
+# URL     : http://nagios.fm4dd.com/howto                               #
 # Licence : GPL - http://www.fsf.org/licenses/gpl.txt                   #
 #           Written for and verified with Nagios version 3.2.3          #
 # Help    : ./pnp4n_send_host_mail.pl -h                                #
@@ -23,8 +23,8 @@
 #           the script now reads logo's from file                       #
 # Version : 1.6 Finally worked with PNP4Nagios by pulling the graphs    #
 #           from the web. Enhancements in debug, language support, etc  #
-# Version : 1.7 Dedicating the script to PNP4Nagios only, removing code #
-#           for Nagiosgraph + adding authentication and documentation.  #
+# Version : 1.7 Separating the script from Nagiosgraph to PNP4Nagios.   #
+# Version : 1.8 CSS and style enhancements.                             #
 #                                                                       #
 # Depends : perl-Mail-Sendmail (Mail::Sendmail)                         #
 #           perl-MIME-tools (MIME::Base64)                              #
@@ -39,27 +39,30 @@ use MIME::Base64;
 use File::Temp;
 use strict;
 use warnings;
-use vars qw( $logo_id $graph_id $tmpfile $land $tbl $var
+use vars qw( $logo_id $graph_id $link_id $tmpfile $land $tbl $var
              %param_vars $elapse $tstamp $tstart $img_get);
 
 # The version of this script
-my $Version            ='1.7.3';
+my $Version            ='1.8.0';
 # the sender e-mail address to be seen by recipients
 my $mail_sender        = "Nagios Monitoring <nagios\@frank4dd.com>";
 # The Nagios CGI URL for integrated links
-my $nagios_cgiurl      = "http://nagios.frank4dd.com/nagios/cgi-bin";
+my $nagios_cgiurl      = "http://nagios.fm4dd.com/nagios/cgi-bin";
 # Here we define a simple HTML stylesheet to be used in the HTML header.
 my $html_style         = "body {text-align: center; font-family: Verdana, sans-serif; font-size: 10pt;}\n"
                        . "img.logo {float: left; margin: 10px 10px 10px; vertical-align: middle}\n"
+                       . "img.link {float: right;  margin: 0px 1px; vertical-align: middle}\n"
                        . "span {font-family: Verdana, sans-serif; font-size: 12pt;}\n"
-                       . "table {text-align:center; margin-left: auto; margin-right: auto;}\n"
+                       . "table {text-align:center; margin-left: auto; margin-right: auto; border: 1px solid black;}\n"
                        . "th {white-space: nowrap;}\n"
                        . "th.even {background-color: #D9D9D9;}\n"
                        . "td.even {background-color: #F2F2F2;}\n"
                        . "th.odd {background-color: #F2F2F2;}\n"
                        . "td.odd {background-color: #FFFFFF;}\n"
                        . "th,td {font-family: Verdana, sans-serif; font-size: 10pt; text-align:left;}\n"
-                       . "th.customer {width: 600px; background-color: #004488; color: #ffffff;}";
+                       . "th.customer {width: 600px; background-color: #004488; color: #ffffff;}\n"
+                       . "p.foot {width: 602px; background-color: #004488; color: #ffffff; "
+                       . "margin-left: auto; margin-right: auto;}\n";
 my $table_size         = "600px";
 my $header_size        = "180px";
 my $data_size          = "420px";
@@ -76,7 +79,7 @@ my $test_host          = "susie114"; # existing host in PNP4Nagios
 # image generation. Modified by Robert Becht for use with PNP4Nagios.
 # The PNP4Nagios URL : if not used we can set $pnp4nagios_url = undef;
 # ########################################################################
-my $pnp4nagios_url     = "http://nagios.frank4dd.com/pnp4nagios";
+my $pnp4nagios_url     = "http://nagios.fm4dd.com/pnp4nagios";
 my $graph_history      = 48; # in hours, a good range is between 12...48
 
 # ########################################################################
@@ -93,7 +96,7 @@ my $web_pass           = undef; # $web_pass           = "mypass";
 # given, we use the provided value in $o_smtphost below as the default.
 # If the mailserver requires auth, an example is further down the code.
 # ########################################################################
-my $o_smtphost         = "192.168.1.64";
+my $o_smtphost         = "127.0.0.1";
 my $domain             = "\@yourdomain"; # only for -g group
 my @listaddress        = ();
 
@@ -102,7 +105,7 @@ my @listaddress        = ();
 # PNG file, i.e. the nagios logo. Best size is rectangular up to 160x80px.
 # example: [nagioshome]/share/images/NagiosEnterprises-whitebg-112x46.png
 # ########################################################################
-my $logofile = "/srv/www/std-root/nagios.frank4dd.com/images/nagios-logo.gif";
+my $logofile = "/srv/www/std-root/nagios.fm4dd.com/images/nagios-mail.gif";
 
 # ########################################################################
 # Because our mail system being Lotus Notes, which is not supporting PNG
@@ -117,10 +120,11 @@ my $jpg_workaround = undef;
 # outside of Nagios. The color values are used for highlighting the
 # background of the notification type cell.
 # ########################################################################
-my %NOTIFICATIONCOLOR=('PROBLEM'=>'#FF8080','RECOVERY'=>'#80FF80','ACKNOWLEDGEMENT'=>'FFFF80',
-                       'DOWNTIMESTART'=>'80FFFF','DOWNTIMEEND'=>'80FF80','DOWNTIMECANCELLED'=>'FFFF80',
-                       'FLAPPINGSTART'=>'#FF8080','FLAPPINGSTOP'=>'#80FF80',' FLAPPINGDISABLED'=>'FFFF80',
-                       'TEST'=>'80FFFF');
+my %NOTIFICATIONCOLOR=('PROBLEM'=>'#FF8080','RECOVERY'=>'#80FF80','ACKNOWLEDGEMENT'=>'#FFFF80',
+                       'DOWNTIMESTART'=>'#80FFFF','DOWNTIMEEND'=>'#80FF80','DOWNTIMECANCELLED'=>'#FFFF80',
+                       'FLAPPINGSTART'=>'#FF8080','FLAPPINGSTOP'=>'#80FF80',' FLAPPINGDISABLED'=>'#FFFF80',
+                       'TEST'=>'#80FFFF','CRITICAL'=>'#FFAA60', 'WARNING'=>'#FFFF80', 'OK'=>'#80FF80',
+                       'UNKNOWN'=>'#80FFFF', 'UP'=>'#80FF80', 'DOWN'=>'#FFAA60', 'UNREACHABLE'=>'#80FFFF');
 
 # ########################################################################
 # language translated message text: $language{$land}{'A'}  (=Customer)
@@ -177,7 +181,7 @@ my %language = ('en' => { 'A' => 'Customer',
                           'J' => '投稿者',
                           'K' => 'コメント',
                           'L' => 'Nagios 監視システムの通知',
-                          'M' => 'このメッセージはオープンソースの監視システムNagiosで生成されています。' });
+                          'M' => 'このメーセジはオープンソースの監視システムNagiosで生成されています。' });
 
 ####### Global Variables - No changes necessary below this line ##########
 # Nagios notification type, i.e. PROBLEM
@@ -234,6 +238,14 @@ my %mail;
 # use it if the logo or the pnp4nagios graph cannot be found.
 my $empty_img          = "R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICTAEAOw==";
 
+# $link_img is base64-encoded image representing a graph, and used as a icon
+# to have a clickable link back to Nagiosgraph.
+my $link_img           = "R0lGODlhFAAQAKIAAMy2vFxaXOTW1MSmnPz29JxKVLR+hKyipCwAAAAAFAAQAAAD"
+                       . "eRi63E4QQCFmHcZIBYkkwkcJmTAARdB9aAVQWmUoR12jhVEPxWDzKpBEUEB5MJ4K"
+                       . "gRMBFUynp6cTKKwImldv0IQodLYtwJCz2RSDgQmgHhqUn6VqjBlZunJI7x26g5Q0"
+                       . "GDk+ZgcAZgBMWENKFBNUQVNCEUoHkA6YDgkAOw==";
+my $link_type          = "gif";
+
 # ########################################################################
 # subroutine defintions below
 # ########################################################################
@@ -249,7 +261,7 @@ sub p_version { print "pnp4n_send_host_mail.pl version : $Version\n"; }
 sub print_usage {
     print "Usage: $0 [-v] [-V] [-h] [-t] [-H <SMTP host>] [-p <customername>]
        [-r <to_recipients>] or -g <to_group>] [-c <cc_recipients>] [-b <bcc_recipients>]
-       [-f <text|html|multi|graph>] [-u] [-l <en|jp|fr|de>(or other languages if added]\n";
+       [-f <text|html|multi|graph>] [-u] [-l <en|jp|fr|de|(or other languages if added)>]\n";
 }
 
 # ########################################################################
@@ -465,6 +477,8 @@ sub create_message_text {
 # Create a HTML message -> $html_msg, per flags include URL's and IMG's
 # ########################################################################
 sub create_message_html {
+  my $cellcolor = $NOTIFICATIONCOLOR{$o_notificationtype};
+
   # Start HTML message definition
   $html_msg = "<html><head><style type=\"text/css\">$html_style</style></head><body>\n"
             . "<table width=$table_size><tr>\n";
@@ -474,16 +488,18 @@ sub create_message_html {
     $html_msg .= "<td><img class=\"logo\" src=\"cid:$logo_id\"></td>"
               .  "<td><span>$language{$land}{'L'}</span></td></tr><tr>\n";
   } else {
-    $html_msg .= "<th colspan=2><span>$language{$land}{'L'}</span></th></tr><tr>\n"; }
+    $html_msg .= "<th colspan=\"2\"><span>$language{$land}{'L'}</span></th></tr><tr>\n"; }
 
   if ( defined($o_customer)) {
-    $html_msg .= "<th colspan=2 class=customer>$o_customer</th></tr><tr>\n"; }
+    $html_msg .= "<th colspan=\"2\" class=customer>$o_customer</th></tr><tr>\n"; }
 
   $html_msg = $html_msg
             . "<th width=$header_size class=even>$language{$land}{'B'}:</th>\n"
-            . "<td bgcolor=$NOTIFICATIONCOLOR{$o_notificationtype}>\n"
-            . "$o_notificationtype</td></tr>\n"
-            . "<tr><th class=odd>$language{$land}{'C'}:</th><td>$o_hoststate</td></tr>\n"
+            . "<td bgcolor=$cellcolor>$o_notificationtype</td></tr>\n";
+
+  $cellcolor = $NOTIFICATIONCOLOR{$o_hoststate};
+  $html_msg = $html_msg
+            . "<tr><th class=odd>$language{$land}{'C'}:</th><td bgcolor=$cellcolor>$o_hoststate</td></tr>\n"
             . "<tr><th class=even>$language{$land}{'D'}:</th><td class=even>\n";
 
   if (defined($o_addurl)) {
@@ -507,10 +523,14 @@ sub create_message_html {
   if (defined($o_addurl)) {
 
     $html_msg .=  "<a href=\"$nagios_cgiurl/status.cgi?type=1&host=" . urlencode($o_hostname) . "\">$o_hostoutput</a>\n";
+
     # If the graph image wasn't empty, We add an additional link for PNP4Nagios
     if ($o_format eq "graph" && $graph_type ne "gif") {
-      $html_msg .=  ", see also <a href=\"$pnp4nagios_url/graph?host=" . urlencode($o_hostname) ."&srv=_HOST_\">PNP4Nagios</a>\n"; }
-  } else { $html_msg = $html_msg . $o_hostoutput; }
+      $link_id  = create_content_id();
+      $html_msg .= " <a href=\"$pnp4nagios_url/graph?host=" . urlencode($o_hostname) ."&srv=_HOST_\">"
+                .  "<img class=\"link\" src=\"cid:$link_id\"></a>\n"; }
+  }
+  else { $html_msg = $html_msg . $o_hostoutput; }
   
   $html_msg = $html_msg . "</td></tr>\n";
 
@@ -524,16 +544,16 @@ sub create_message_html {
               . "<td>$o_notificationcmt</td></tr>\n";
   }
 
-  $html_msg .= "</table><br>\n";
+  $html_msg .= "</table>\n";
 
   # if we got the graph format and a image has been generated, we add it here
   if (defined($graph_img) && $o_format eq "graph") {
     $graph_id = create_content_id();
-    $html_msg .= "<img src=\"cid:$graph_id\">\n";
+    $html_msg .= "<br><img src=\"cid:$graph_id\">\n";
   }
 
   # add the Nagios footer tag line here
-  $html_msg .= "<br><hr>\n$language{$land}{'M'}\n<hr>\n";
+  $html_msg .= "<p class=\"foot\">\n$language{$land}{'M'}\n</p>\n";
 
   # add the extra debugtables if verbose output had been requested,
   # or if the notification command contains the keyword "email-debug"
@@ -725,8 +745,17 @@ if ($o_format eq "multi" || $o_format eq "graph") {
           . "$logo_img\n";
 
   # if we got the graph format and a image has been generated, we add it here
-  # create the third boundary marker for the graph
   if (defined($graph_img) && $o_format eq "graph") {
+
+    # create the third boundary marker for the graph link image
+    $mail_content = $mail_content . "$boundary\n"
+          . "Content-Type: image/$link_type; name=\"logo.$link_type\"\n"
+          . "Content-Transfer-Encoding: base64\n"
+          . "Content-ID: <$link_id>\n"
+          . "Content-Disposition: inline; filename=\"link.$link_type\"\n\n"
+          . "$link_img\n";
+
+    # create the fourth boundary marker for the graph image
     $mail_content = $mail_content . "\n"
                   . "$boundary\n"
                   . "Content-Type: image/$graph_type; name=\"graph.$graph_type\"\n"
