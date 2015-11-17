@@ -10,13 +10,13 @@ A small perl script 'find-snmp.pl' is lightweight and flexible to adapt, allowin
 
 Below is a example run:
 
-```susie:/home/fm/snmp-queries # ./find-snmp.pl 192.168.50 20 35
-Checking 192.168.50.20... Host does not exist.
-Checking 192.168.50.21... Host does not exist.
-Checking 192.168.50.22... Host does not exist.
-Checking 192.168.50.23... Host 192.168.50.23 alive... No-SNMP(1) No-SNMP(2) No-SNMP(3) No-SNMP(4) No-SNMP(5)
-Checking 192.168.50.24... Host 192.168.50.24 alive... No-SNMP(1) No-SNMP(2) No-SNMP(3) No-SNMP(4) No-SNMP(5)
-Checking 192.168.50.25... Host does not exist.
+```susie:/home/fm/snmp-queries # ./find-snmp.pl 192.168.50 20 35  
+Checking 192.168.50.20... Host does not exist.  
+Checking 192.168.50.21... Host does not exist.  
+Checking 192.168.50.22... Host does not exist.  
+Checking 192.168.50.23... Host 192.168.50.23 alive... No-SNMP(1) No-SNMP(2) No-SNMP(3) No-SNMP(4) No-SNMP(5)  
+Checking 192.168.50.24... Host 192.168.50.24 alive... No-SNMP(1) No-SNMP(2) No-SNMP(3) No-SNMP(4) No-SNMP(5)  
+Checking 192.168.50.25... Host does not exist.  
 Checking 192.168.50.26... Host does not exist.
 Checking 192.168.50.27... Host does not exist.
 Checking 192.168.50.28... Host does not exist.
