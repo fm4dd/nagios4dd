@@ -6,7 +6,7 @@ A repeating task is to identify systems responding to SNMP on the network. Manua
 
 Below is a example run:
 
-'susie:/home/fm/snmp-queries # ./find-snmp.pl 192.168.50 20 35
+`susie:/home/fm/snmp-queries # ./find-snmp.pl 192.168.50 20 35
 Checking 192.168.50.20... Host does not exist.
 Checking 192.168.50.21... Host does not exist.
 Checking 192.168.50.22... Host does not exist.
@@ -22,7 +22,7 @@ Checking 192.168.50.31... Host 192.168.50.31 alive... Found: CISCO09F55203.fm4dd
 Checking 192.168.50.32... Host 192.168.50.32 alive... Found: CISCO09F55204.fm4dd.com (SECro)
 Checking 192.168.50.33... Host does not exist.
 Checking 192.168.50.34... Host does not exist.
-Checking 192.168.50.35... Host does not exist.'
+Checking 192.168.50.35... Host does not exist.`
 
 Enjoy.
 For more resources on Nagios and SNMP, see http://nagios.fm4dd.com/
