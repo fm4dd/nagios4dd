@@ -2,7 +2,11 @@
 
 Nagios tools
 
-A repeating task is to identify systems responding to SNMP on the network. Manually executing ping and snmpwalk for a larger number of IP becomes tiresome. Using a professional security scanner is overkill. A small perl script i'find-snmp.pl' is lightweight and flexible to adapt, allowing us to check variations in SNMP communities with ease. I use it frequently to verify if a system has been SNMP-configured, or to scan a network for changes.
+A repeating task is to identify systems responding to SNMP on the network. Manually executing ping and snmpwalk for a larger number of IP becomes tiresome. Using a professional security scanner is overkill. 
+
+1. find-snmp.pl
+
+A small perl script 'find-snmp.pl' is lightweight and flexible to adapt, allowing us to check variations in SNMP communities with ease. I use it frequently to verify if a system has been SNMP-configured, or to scan a network for changes.
 
 Below is a example run:
 
