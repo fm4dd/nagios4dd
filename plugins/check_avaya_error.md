@@ -72,8 +72,7 @@ Below is an example of the plugin definition in the Nagios command.cfg file.
     # check_avaya_error.pl nagios plugin
     define command{
       command_name check_avaya_alerts
-      command_line /srv/app/nagios/libexec/check_avaya_error.pl -H $HOSTADDRESS$
-    -t 60 -C $ARG1$ -S $ARG2$ -E $ARG3$
+      command_line /srv/app/nagios/libexec/check_avaya_error.pl -H $HOSTADDRESS$ -t 60 -C $ARG1$ -S $ARG2$ -E $ARG3$
     }
 
 ### Plugin Usage Example:
