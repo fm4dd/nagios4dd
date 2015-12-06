@@ -28,42 +28,42 @@ It requires SNMP access to the Avaya media server, which is configured in the ma
 -h, --help<br>
       print this help message
 
--H, --hostname=HOST
+-H, --hostname=HOST<br>
       name or IP address of host to check
 
--C, --community=COMMUNITY NAME
+-C, --community=COMMUNITY NAME<br>
       community name for the host's SNMP agent (implies v1 protocol)
 
--2, --v2c
+-2, --v2c<br>
       Use snmp v2c
 
--l, --login=LOGIN ; -x, --passwd=PASSWD
-      Login and auth password for snmpv3 authentication
+-l, --login=LOGIN ; -x, --passwd=PASSWD<br>
+      Login and auth password for snmpv3 authentication<br>
       If no priv password exists, implies AuthNoPriv
 
--X, --privpass=PASSWD
+-X, --privpass=PASSWD<br>
       Priv password for snmpv3 (AuthPriv protocol)
 
--L, --protocols=[authproto],[privproto]
-      [authproto]: Authentication protocol (md5|sha : default md5)
+-L, --protocols=[authproto],[privproto]<br>
+      [authproto]: Authentication protocol (md5|sha : default md5)a<br>
       [privproto]: Priv protocol (des|aes : default des)
 
--p, --port=PORT
+-p, --port=PORT<br>
       SNMP port (Default 161)
 
--w, --warn=INTEGER
+-w, --warn=INTEGER<br>
       warning level for cpu in percent
 
--c, --crit=INTEGER
+-c, --crit=INTEGER<br>
       critical level for cpu in percent
 
--f, --perfparse
+-f, --perfparse<br>
       Perfparse compatible output
 
--t, --timeout=INTEGER
+-t, --timeout=INTEGER<br>
       timeout for SNMP in seconds (Default: 5)
 
--V, --version
+-V, --version<br>
       prints version number
 
 ### Plugin Definition Example:
