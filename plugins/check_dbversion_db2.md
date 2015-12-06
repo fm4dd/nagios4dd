@@ -102,7 +102,7 @@ Version OK: DB2 v9.5.0.3 build s081210 (64 bit), PTF: U823474 FP: 3|</pre>
 The plugin in 'compliance' mode, returns the status depending on the version string definition set in the supplied config file.
 
 `
-susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64 50000 DB2 db2admin "p@ssw0rd" -f /srv/app/nagios/libexec/check_dbversion.cfg 
+susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64 50000 DB2 db2admin "p@ssw0rd" -f /srv/app/nagios/libexec/check_dbversion.cfg  
 Version WARN: DB2 v9.5.0.3 build s081210 vulnerable (low-medium)|Needs 9.5.0.5
 (FP-5) Build level s091123, Release Date 14 Dec 2009, vulnerabilities listed
 here: http://www-01.ibm.com/support/docview.wss?rs=71&uid=swg21412902
