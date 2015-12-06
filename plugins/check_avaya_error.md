@@ -16,7 +16,7 @@ It requires SNMP access to the Avaya media server, which is configured in the ma
 
 * * *
 
-Usage: /srv/app/nagios/libexec/check_avaya_error.pl [-v] -H <host> -C <snmp_community> [-2] | (-l login -x passwd [-X pass -L <authp>,<privp>]) [-p <port>] -S <SVL|CML> -E <errorlevel> [-t <timeout>] [-V]
+./check_avaya_error.pl [-v] -H <host> -C <snmp_community> [-2] | (-l login -x passwd [-X pass -L <authp>,<privp>]) [-p <port>] -S <SVL|CML> -E <errorlevel> [-t <timeout>] [-V]
 
 ### Options:
 
