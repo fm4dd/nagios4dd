@@ -22,10 +22,10 @@ It requires SNMP access to the Avaya media server, which is configured in the ma
 
 * * *
 
--v, --verbose
+-v, --verbose<br>
       print extra debugging information
 
--h, --help
+-h, --help<br>
       print this help message
 
 -H, --hostname=HOST
