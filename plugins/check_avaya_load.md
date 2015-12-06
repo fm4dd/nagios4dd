@@ -1,10 +1,10 @@
-# check_avaya_load
+# check_avaya_load.pl
 
-## Man page for the Nagios plugin check_avaya_load
+## Man page for the Nagios plugin check_avaya_load.pl
 
 Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
-### check_avaya_load
+### check_avaya_load.pl
 
 * * *
 
@@ -44,9 +44,9 @@ It requires SNMP access to the Avaya media server, which is configured in the ma
 -X, --privpass=PASSWD
       Priv password for snmpv3 (AuthPriv protocol)
 
--L, --protocols=<authproto>,<privproto>
-      <authproto> : Authentication protocol (md5|sha : default md5)
-      <privproto> : Priv protocole (des|aes : default des)
+-L, --protocols=[authproto],[privproto]
+      [authproto]: Authentication protocol (md5|sha : default md5)
+      [privproto]: Priv protocole (des|aes : default des)
 
 -p, --port=PORT
       SNMP port (Default 161)
@@ -76,8 +76,7 @@ Below is an example of the plugin definition in the Nagios command.cfg file.
 # check_avaya_load nagios plugin
 define command{
   command_name check_avaya_load
-  command_line /srv/app/nagios/libexec/check_avaya_load.pl -H $HOSTADDRESS$ 
--t 60 -C $ARG1$ -f -w $ARG2$ -c $ARG3$
+  command_line /srv/app/nagios/libexec/check_avaya_load.pl -H $HOSTADDRESS$ -t 60 -C $ARG1$ -f -w $ARG2$ -c $ARG3$
 }
 ```
 
