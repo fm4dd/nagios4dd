@@ -72,13 +72,13 @@ Nagios plugin service definition, e.g. security-services.cfg:
       check_command                 check_asa_sessions!NAGro!sslvpn!40!80
     }
 
-Nagios Output:
+### Nagios Output:
 
 Exemplary output for a VPN cluster, providing both SSL-VPN (Anyconnect) and clientless Web-VPN access.
 
 ![](images/check_asa_sessions-example1.png)
 
-Nagios Graph:
+### NagiosGraph:
 
 Visualizing the number of concurrent VPN sessions gives a good indication about remote user activity, and helps track VPN uage, sizing, Cisco ASA VPN hardware and license limits.
 
