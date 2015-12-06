@@ -76,8 +76,7 @@ Below is an example of the plugin definition in the Nagios command.cfg file.
 <pre># check_avaya_trunk nagios plugin
 define command{
   command_name check_avaya_trunk
-  command_line /srv/app/nagios/libexec/check_avaya_trunk.pl -H $HOSTADDRESS$ 
--t 60 -C $ARG1$ -f -w $ARG2$ -c $ARG3$
+  command_line /srv/app/nagios/libexec/check_avaya_trunk.pl -H $HOSTADDRESS$ -t 60 -C $ARG1$ -f -w $ARG2$ -c $ARG3$
 }</pre>
 
 ### Plugin Usage Example:
