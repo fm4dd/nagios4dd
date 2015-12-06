@@ -22,19 +22,19 @@ It requires the database to be set up for accepting network connections and bein
 
 * * *
 
-<db-ip>  
+[db-ip]  
       The IP address of the database server
 
-<db-port>  
+[db-port]  
       The database network port, DB2 typically uses tcp port 50000
 
-<db-instance>  
+[db-instance]  
       The database instance name
 
-<db-user>  
+[db-user]  
       The database user required for database login
 
-<db-pwd>  
+[db-pwd]  
       The password of the database user. It can be enclosed in double-quotes to to accept special characters such as ;
 
 -d  
@@ -96,17 +96,17 @@ The blacklist/whitelist file for comparing database versions against consists of
 
 The plugin in 'discovery' mode, returns OK if the software version string could be fetched.
 
-<pre class="code">susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64
-50000 DB2 db2admin "p@ssw0rd"
+<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64 50000 DB2 db2admin "p@ssw0rd"
 Version OK: DB2 v9.5.0.3 build s081210 (64 bit), PTF: U823474 FP: 3|</pre>
 
 The plugin in 'compliance' mode, returns the status depending on the version string definition set in the supplied config file.
 
-<pre class="code">susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64
-50000 DB2 db2admin "p@ssw0rd" -f /srv/app/nagios/libexec/check_dbversion.cfg 
+```
+susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64 50000 DB2 db2admin "p@ssw0rd" -f /srv/app/nagios/libexec/check_dbversion.cfg 
 Version WARN: DB2 v9.5.0.3 build s081210 vulnerable (low-medium)|Needs 9.5.0.5
 (FP-5) Build level s091123, Release Date 14 Dec 2009, vulnerabilities listed
-here: http://www-01.ibm.com/support/docview.wss?rs=71&uid=swg21412902</pre>
+here: http://www-01.ibm.com/support/docview.wss?rs=71&uid=swg21412902
+```
 
 ### Notes:
 
