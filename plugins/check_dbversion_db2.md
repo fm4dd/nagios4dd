@@ -59,6 +59,8 @@ The blacklist/whitelist file for comparing database versions against consists of
 
 * * *
 
+When used with '-f configfile', the configuration file has the following format:
+
     ######################################################################
     # Below are the 'approved' versions we explicitly endorse for usage: #
     ######################################################################
