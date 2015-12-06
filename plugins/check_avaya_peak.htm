@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta name="Title" content="Man page for the nagios plugin check_avaya_peak" />
+  <meta name="Description" content="nagios plugin manual page for the nagios plugin check_avaya_peak" />
+  <meta name="Keywords" content="nagios, monitoring, Avaya, PBX, VOIP" />
+  <meta name="Classification" content="Nagios plugin manual" />
+  <title>Man page for the nagios plugin check_avaya_peak</title>
+</head>
+
+<body>
+<div id="wrapper">
+  <div id="banner">
+    <h1>check_avaya_peak</h1>
+    <h2>Man page for the Nagios plugin check_avaya_peak</h2>
+  </div>
+  <div id="content">
+  <div id=copyright>Copyright (c) 2010 Frank4DD <support[at]frank4dd.com></div>
+  <h3 id=intro>check_avaya_peak.pl</h3>
+  <hr />
+    <p>
+Avaya S8xxx media servers provide call peak information through Avaya's SNMP agents g3-mib for data, voice, srv, media and overall call peak values. These are collected in hourly periods, so the published data is always refering to the last hour of operation. The peak values available seem to be the concurrent number of calls measured per second, and the total number of calls per hour. This plugin queries these last hours peak values and compares them against warning and critical thresholds. The values are returned from one of these rate groups:
+    </p>
+    <ul>
+      <li>g3callratedata</li>
+      <li>g3callratevoice</li>
+      <li>g3callratesrv</li>
+      <li>g3callratemedia</li>
+      <li>g3callratetotal</li>
+    </ul>
+    <p>
+The returned data is most useful for graphing to identify trends in usage when used together with the trunk group call monitoring plugin. Without graphing, the plugin needs to run only once per hour, but for graphing we want to get data in 5 minute intervals. We can separately return and graph the concurrent calls peak or the total calls per hour.
+</p>
+<p>
+This plugin requires SNMP access to the Avaya media server, which is configured in the management console.
+Fo SNMP queries it depends on Perl's Net::SNMP package, i.e. perl-SNMP-5.3.0.1-25.34.1.
+</p>
+<h3 id=usage>Usage:</h3>
+<hr />
+<p>
+check_avaya_peak.pl [-v] -H &lt;host&gt; -C &lt;snmp_community&gt; [-2] | (-l login -x passwd [-X pass -L &lt;authp&gt;,&lt;privp&gt;])  [-p &lt;port&gt;] -R &lt;rate type&gt; -P &lt;peak type&gt; -w &lt;warn level&gt; -c &lt;crit level&gt; [-t &lt;timeout&gt;] [-f] [-V]
+</p>
+<h3 id=options>Options:</h3>
+<hr />
+<p>
+-v, --verbose<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print extra debugging information 
+</p>
+<p>
+-h, --help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print this help message
+</p>
+<p>
+-H, --hostname=HOST<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name or IP address of host to check
+</p>
+<p>
+-C, --community=COMMUNITY NAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; community name for the host's SNMP agent (implies v1 protocol)
+</p>
+<p>
+-2, --v2c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Use snmp v2c
+</p>
+<p>
+-l, --login=LOGIN ; -x, --passwd=PASSWD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Login and auth password for snmpv3 authentication<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If no priv password exists, implies AuthNoPriv 
+</p>
+<p>
+-X, --privpass=PASSWD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Priv password for snmpv3 (AuthPriv protocol)
+</p>
+<p>
+-L, --protocols=&lt;authproto&gt;,&lt;privproto&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;authproto&gt; : Authentication protocol (md5|sha : default md5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;privproto&gt; : Priv protocole (des|aes : default des) 
+</p>
+<p>
+-p, --port=PORT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SNMP port (Default 161)
+</p>
+<p>
+-w, --warn=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; warning number of active calls
+</p>
+<p>
+-c, --crit=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; critical number of active calls
+</p>
+<p>
+-R, --ratetype=data|voice|srv|media|total<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the rate group to check for data: data, voice, srv, media or total
+</p>
+<p>
+-P, --peaktype=concur|total<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the type of peak data to return: concur=concurrent calls, total=total calls/h
+</p>
+<p>
+-t, --timeout=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; timeout for SNMP in seconds (Default: 5)
+</p>
+<p>
+-V, --version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prints version number
+</p>
+<h3 id=plugindefinition>Plugin Definition Example:</h3>
+<hr />
+<p>
+Below is an example of the plugin definition in the Nagios command.cfg file.
+</p>
+<pre><code># check_avaya_peak nagios plugin returns concurrency peak
+define command{
+  command_name check_avaya_cpeaks
+  command_line /srv/app/nagios/libexec/check_avaya_peak.pl -H $HOSTADDRESS$ -t 60 -C $ARG1$ -R $ARG2$ -P concur -w $ARG3$ -c $ARG4$
+}
+
+# check_avaya_peak nagios plugin returns hourly total
+define command{
+  command_name check_avaya_tpeaks
+  command_line /srv/app/nagios/libexec/check_avaya_peak.pl -H $HOSTADDRESS$ -t 60 -C $ARG1$ -R $ARG2$ -P total -w $ARG3$ -c $ARG4$
+}</code></pre>
+<p></p>
+<h3 id=pluginexample>Plugin Usage Example:</h3>
+<hr />
+<p>
+The plugin with its most basic use.
+</p>
+<pre class=code>susie: ~ # cd /srv/app/nagios/libexec
+susie: ~ # ./check_avaya_peak.pl -H 192.168.65.11 -C NBNro -w 300 -c 600 -R voice -P total -f
+Avaya peaks for 'voice' at 1300 - 574 total calls 574 &gt; 300 : WARNING | peakdata=574 peaktype=total ratetype=voice peaktime=13:48:00
+
+# ./check_avaya_peak.pl -H 192.168.65.11 -C NBNro -w 580 -c 600 -R voice -P total -f
+Avaya peaks for 'voice' at 1300 - 574 total calls : OK | peakdata=574 peaktype=total ratetype=voice peaktime=13:48:00
+
+# ./srv/app/nagios/libexec/check_avaya_peak.pl -H 192.168.65.11 -C NBNro -w 440 -c 500 -R voice -P total -f
+Avaya peaks for 'voice' at 1300 - 574 total calls 574 &gt; 500 : CRITICAL | peakdata=574 peaktype=total ratetype=voice peaktime=13:48:00
+
+# ./check_avaya_peak.pl -H 192.168.65.11 -C NBNro -w 10 -c 20 -R voice -P concur -f
+Avaya peaks for 'voice' at 1300 - 11 concur calls 11 &gt; 10 : WARNING | peakdata=11 peaktype=concur ratetype=voice peaktime=13:48:00
+
+# ./check_avaya_peak.pl -H 192.168.65.11 -C NBNro -w 15 -c 20 -R voice -P concur -f
+Avaya peaks for 'voice' at 1300 - 11 concur calls : OK | peakdata=11 peaktype=concur ratetype=voice peaktime=13:48:00
+
+# ./check_avaya_peak.pl -H 192.168.65.11 -C NBNro -w 8 -c 10 -R voice -P concur -f
+Avaya peaks for 'voice' at 1300 - 11 concur calls 11 &gt; 10 : CRITICAL | peakdata=11 peaktype=concur ratetype=voice peaktime=13:48:00</pre>
+<p></p>
+</div>
+</body></html>

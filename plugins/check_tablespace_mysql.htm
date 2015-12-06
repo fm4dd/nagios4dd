@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta name="Title" content="Man page for the nagios plugin check_tablespace_mysql" />
+  <meta name="Description" content="nagios plugin manual page for the nagios plugin check_tablespace_mysql" />
+  <meta name="Keywords" content="nagios, monitoring, MySQL Server, tablespace" />
+  <meta name="Classification" content="Nagios plugin manual" />
+  <title>Man page for the nagios plugin check_tablespace_mysql</title>
+</head>
+
+<body>
+<div id="wrapper">
+  <div id="banner">
+    <h1>check_tablespace_mysql</h1>
+    <h2>Man page for the Nagios plugin check_tablespace_mysql</h2>
+  </div>
+  <div id="content">
+  <div id=copyright>Copyright (c) 2010 Frank4DD <support[at]frank4dd.com></div>
+  <h3 id=intro>check_tablespace_mysql</h3>
+  <hr>
+<p>
+This plugin checks the tablespace size of a specific MySQL Server database against WARN and CRIT thresholds.
+It returns the current tablespace size and the number of data files belonging to this database.
+The plugin can be called in 'reporting' mode, returning the space values withouth checking against a threshold.
+This is helpful if the tablespace only needs to be graphed as a trend over time.
+</p>
+<p>
+It requires the database to be set up for accepting network connections and being reachable
+through that network port from Nagios. The plugin uses the MySQL JDBC driver, this driver
+must be installed and found through the Java classpath on the server executing this plugin.
+<a href=http://fm4dd.com/database/howto-install-MySQL-jdbc.htm>(JDBC installation example)</a>
+</p>
+<h4 id=usage>Usage:</h4>
+<p>
+java -classpath &lt;path to check_tablespace_mysql.class&gt; check_tablespace_mysql &lt;db-ip&gt; &lt;db-port&gt; &lt;db-instance&gt; &lt;db-user&gt; &lt;db-pwd&gt; -d
+</p>
+<p>
+java -classpath &lt;path to check_tablespace_mysql.class&gt; check_tablespace_mysql &lt;db-ip&gt; &lt;db-port&gt; &lt;db-instance&gt; &lt;db-user&gt; &lt;db-pwd&gt; -r
+</p>
+<p>
+java -classpath &lt;path to check_tablespace_mysql.class&gt; check_tablespace_mysql &lt;db-ip&gt; &lt;db-port&gt; &lt;db-instance&gt; &lt;db-user&gt; &lt;db-pwd&gt; &lt;KB-warn&gt; &lt;KB-crit&gt;
+</p>
+<h4 id=options>Options:</h4>
+<p>
+&lt;db-ip&gt; <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The IP address of the database server </p><p>
+&lt;db-port&gt; <br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The database network port, MySQL typically uses tcp port 3306 </p><p>
+&lt;db-instance&gt; <br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The database instance name  </p><p>
+&lt;db-user&gt; <br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The database user required for database login </p><p>
+&lt;db-pwd&gt; <br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The password of the database user. It can be enclosed in double-quotes to to accept special characters such as ; </p><p>
+-d <br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enable debugging output, lists all table sizes</p><p>
+-r <br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Reporting tablespace size, always returns OK</p><p>
+&lt;KB-warn&gt; &lt;KB-crit&gt; <br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Set alert thresholds for WARN and CRIT in Kbytes
+<h4 id=pluginexample>Plugin Usage Example:</h4>
+<p>
+The plugin in 'reporting' mode, returns OK if the tablespace size could be fetched.
+<pre class=code># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128
+ 3306 edacs "edacsread" "dbpass" -r
+Tablespace OK: edacs 4961 KBytes|edacs: 27 datafiles, 4961 KB</pre>
+</p>
+<p>
+The plugin in 'check' mode, returns the status depending on the tablespace size exceeding the WARN and CRIT threshold values.
+<pre class=code># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128
+ 3306 edacs "edacsread" "dbpass" 4000 5000
+Tablespace WARN: edacs 4961 KBytes|edacs: 27 datafiles, 4961 KB</pre>
+  </p>
+  <p>
+The plugin in 'debug' mode, showing individual data file sizes for this database.
+<pre class=code># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128
+ 3306 edacs "edacsread" "dbpass" -d
+DB connect: jdbc:mysql://192.168.98.128:3306/edacs?user=edacsread&amp;password=dbpass
+File Name:       edacs_daystats Space used:         11 KB
+File Name:        edacs_mainlog Space used:       1520 KB
+File Name:       edacs_monstats Space used:          2 KB
+File Name:         edacs_remote Space used:         43 KB
+File Name:         edacs_router Space used:          2 KB
+File Name:        edacs_service Space used:          2 KB
+File Name:        edacs_templog Space used:       3364 KB
+File Name:          edacs_users Space used:         15 KB
+File Name:        edacs_version Space used:          2 KB</pre>
+  </p>
+  <h4 id=notes>Notes:</h4>
+  <p>
+  The plugin's .java source code file needs to be compiled into Java bytecode before it can be used, i.e. by calling:<br>
+  <i>javac check_tablespace_mysql.java</i>.
+  </p>
+</div>
+</body></html>

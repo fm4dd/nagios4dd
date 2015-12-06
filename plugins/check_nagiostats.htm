@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta name="Title" content="Man page for the nagios plugin check_nagiostats.pl" />
+  <meta name="Description" content="nagios plugin manual page for the nagios plugin check_nagiostats.pl" />
+  <meta name="Keywords" content="nagios, monitoring, NTP, time, sync" />
+  <meta name="Classification" content="Nagios plugin manual" />
+  <title>Man page for the nagios plugin check_nagiostats.pl</title>
+</head>
+Usage: check_nagiostats.pl [-f <path_to_status.dat>] -s|-o|-p|-r -w <warn> -c <crit>
+
+options:
+-w|--warning
+-c|--critical
+-f|--file                provide an alternate file path to status.dat
+Examples:
+To check host latency: check_nagiostats.pl -o -w 200 -c 500
+To check service latency: check_nagiostats.pl -s -w 200 -c 500
+Attention: warning and critical always checks max_latency.
+To count checked services: check_nagiostats.pl --servicecount -w 2000 -c 2500
+To count checked hosts: check_nagiostats.pl --hostcount -w 900 -c 1000
+
+<body>
+<div id="wrapper">
+  <div id="banner">
+    <h1>check_nagiostats.pl</h1>
+    <h2>Man page for the Nagios plugin check_nagiostats.pl.pl</h2>
+  </div>
+  <div id="content">
+  <div id=copyright>Update (c) 2010 Frank4DD <support[at]frank4dd.com></div>
+  <h3 id=intro>check_nagiostats.pl.pl</h3>
+  <hr>
+<p>
+This plugin checks nagios performance data by parsing the nagios status.dat file, e.g. in /usr/local/nagios/var/status.dat.
+</p>
+Because it depends on being able to read the status.dat file, it can only run locally on the Nagios server itself.
+</p>
+<h4 id=usage>Usage:</h4>
+<p>
+check_nagiostats.pl.pl [-v] -H &lt;host&gt; -C &lt;snmp_community&gt; [-2] | (-l login -x passwd [-X pass -L &lt;authp&gt;,&lt;privp&gt;])  [-p &lt;port&gt;] [-o &lt;tz-offset&gt;] -w &lt;warn level&gt; -c &lt;crit level&gt; [-f] [-t &lt;timeout&gt;] [-V]
+</p>
+<h4 id=options>Options:</h4>
+<p>
+-v, --verbose<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print extra debugging information 
+</p>
+<p>
+-h, --help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print this help message
+</p>
+<p>
+-s, --service_latency<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checks the service with the max execution latency
+</p>
+<p>
+-o, --host_latency<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checks the host check with the max execution latency
+</p>
+<p>
+-p, --hostcount<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; check number of monitored hosts
+</p>
+<p>
+-r, --servicecount<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; check number of monitored services
+</p>
+<p>
+-w, --warn=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; warning threshold
+</p>
+<p>
+-c, --crit=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; critical threshold
+</p>
+<p>
+-f, --file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; provide an alternate file path to status.dat
+</p>
+
+<h4 id=plugindefinition>Plugin Definition Example:</h4>
+<p>
+Below is an example of the plugin definition in the Nagios command.cfg file.
+</p>
+<pre><code># Check the # of monitored hosts w. check_nagiostats.pl
+define command{
+  command_name check_nagiosconf
+  command_line $USER1$/check_nagiostats.pl -w $ARG1$ -c $ARG2$ -p
+}</code></pre>
+<p></p>
+<h4 id=pluginexample>Plugin Usage Example:</h4>
+<p>
+The plugin with its most basic use, counting the number of monitored hosts
+</p>
+<pre class=code>susie: ~ # cd /srv/app/nagios/libexec
+# ./check_nagiostats.pl -w 50 -c 100 -p
+OK: 3 Nagios host checks|count=3 </pre>
+</p>
+<p>
+The plugin with -o, checking the max execution latency for host checks.
+</p>
+<pre class=code># ./check_nagiostats.pl -w 50 -c 100 -o
+OK: max latency: =0.000
+avg latency: 0.000
+min latency: =0.000|max=0.000s;50;100 avg=0.000s;50;100 min=0.000s;50;100</pre>
+  </p>
+</div>
+</body></html>

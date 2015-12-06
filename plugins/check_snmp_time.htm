@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta name="Title" content="Man page for the nagios plugin check_snmp_time" />
+  <meta name="Description" content="nagios plugin manual page for the nagios plugin check_snmp_time" />
+  <meta name="Keywords" content="nagios, monitoring, NTP, time, sync" />
+  <meta name="Classification" content="Nagios plugin manual" />
+  <title>Man page for the nagios plugin check_snmp_time</title>
+</head>
+
+<body>
+<div id="wrapper">
+  <div id="banner">
+    <h1>check_snmp_time</h1>
+    <h2>Man page for the Nagios plugin check_snmp_time.pl</h2>
+  </div>
+  <div id="content">
+  <div id=copyright>Update (c) 2010 Frank4DD <support[at]frank4dd.com></div>
+  <h3 id=intro>check_snmp_time.pl</h3>
+  <hr>
+<p>
+This plugin checks the remote servers time and compares it against the local time on the Nagios server. With Nagios being sync'ed to NTP, this can identify systems that have no NTP set up, or NTP is wrongly configured. This plugin is particalry helpful if SNMP is already used to monitor the system.
+</p>
+<p>
+The plugin depends on Perl's Net::SNMP package, i.e. perl-SNMP-5.3.0.1-25.34.1.
+</p>
+<h4 id=usage>Usage:</h4>
+<p>
+check_snmp_time.pl [-v] -H &lt;host&gt; -C &lt;snmp_community&gt; [-2] | (-l login -x passwd [-X pass -L &lt;authp&gt;,&lt;privp&gt;])  [-p &lt;port&gt;] [-o &lt;tz-offset&gt;] -w &lt;warn level&gt; -c &lt;crit level&gt; [-f] [-t &lt;timeout&gt;] [-V]
+</p>
+<h4 id=options>Options:</h4>
+<p>
+-v, --verbose<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print extra debugging information 
+</p>
+<p>
+-h, --help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print this help message
+</p>
+<p>
+-H, --hostname=HOST<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name or IP address of host to check
+</p>
+<p>
+-C, --community=COMMUNITY NAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; community name for the host's SNMP agent (implies v1 protocol)
+</p>
+<p>
+-2, --v2c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Use snmp v2c
+</p>
+<p>
+-l, --login=LOGIN ; -x, --passwd=PASSWD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Login and auth password for snmpv3 authentication<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If no priv password exists, implies AuthNoPriv 
+</p>
+<p>
+-X, --privpass=PASSWD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Priv password for snmpv3 (AuthPriv protocol)
+</p>
+<p>
+-L, --protocols=&lt;authproto&gt;,&lt;privproto&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;authproto&gt; : Authentication protocol (md5|sha : default md5)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;privproto&gt; : Priv protocole (des|aes : default des) 
+</p>
+<p>
+-P, --port=PORT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SNMP port (Default 161)
+</p>
+<p>
+-o, --tzoffset=MINS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the remote systems timezone offset to the Nagios server, in minutes
+</p>
+<p>
+-w, --warn=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; warning level for time difference in seconds
+</p>
+<p>
+-c, --crit=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; critical level for time difference in seconds
+</p>
+<p>
+-f, --perfparse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Perfparse compatible output
+</p>
+<p>
+-t, --timeout=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; timeout for SNMP in seconds (Default: 5)
+</p>
+<p>
+-V, --version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prints version number
+</p>
+<h4 id=plugindefinition>Plugin Definition Example:</h4>
+<p>
+Below is an example of the plugin definition in the Nagios command.cfg file.
+</p>
+<pre><code># check_snmp_time.pl nagios plugin
+define command{
+  command_name check_snmp_time
+  command_line $USER1$/check_snmp_time.pl -H $HOSTADDRESS$ -C $ARG1$ -w $ARG2$ -c $ARG3$ -f
+}</code></pre>
+<p></p>
+<h4 id=pluginexample>Plugin Usage Example:</h4>
+<p>
+The plugin with its most basic use.
+</p>
+<pre class=code>susie: ~ # cd /srv/app/nagios/libexec
+susie: ~ # ./check_snmp_time.pl -H 192.168.98.109 -C NBNro -w 1 -c 20
+192.168.98.109 clock is accurate to the second : OK</pre>
+</p>
+<p>
+The plugin with the -f option, returning additional performance data.
+</p>
+<pre class=code>susie: ~ # cd /srv/app/nagios/libexec
+susie: ~ # ./check_snmp_time.pl -H 192.168.98.109 -C NBNro -w 1 -c 20 -f
+192.168.98.109 clock is accurate to the second : OK | 
+local=2010-12-14_19:27:26 remote=2010-12-14_19:27:26 offset=0</pre>
+  </p>
+</div>
+</body></html>

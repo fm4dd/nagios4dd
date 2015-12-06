@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta name="Title" content="Man page for the nagios plugin check_ldap_lockout" />
+  <meta name="Description" content="nagios plugin manual page for the nagios plugin check_ldap_lockout" />
+  <meta name="Keywords" content="nagios, monitoring, NTP, time, sync" />
+  <meta name="Classification" content="Nagios plugin manual" />
+  <title>Man page for the nagios plugin check_ldap_lockout</title>
+</head>
+
+<body>
+<div id="wrapper">
+  <div id="banner">
+    <h1>check_ldap_lockout</h1>
+    <h2>Man page for the Nagios plugin check_ldap_lockout</h2>
+  </div>
+  <div id="content">
+  <div id=copyright>Update (c) 2010 Frank4DD <support[at]frank4dd.com></div>
+  <h3 id=intro>check_ldap_lockout</h3>
+  <hr>
+<p>
+This plugin checks if a Windows domain user ID is locked out by querying the AD repository through LDAP. Many support teams cannot handle complex passwords even *with* writing them down. :-) As a result, batch jobs fail, application access is locked, or worse...
+</p>
+<h4>Dependencies:</h4>
+<p>
+The plugin is written in 'C' and depends on the OpenLDAP 'C' library and development headers. It can be compiled standalone, independend of other Nagios plugins. It supports only cleartext connections, LDAPS is not yet implemented.
+</p>
+<pre class=code>fm@susie: ~ # rpm -q -a |grep openldap
+openldap2-devel-2.4.12-7.16
+openldap2-client-2.4.12-7.19.1</pre>
+<h4>Compilation:</h4>
+<p>
+gcc -o check_ldap_lockout check_ldap_lockout.c -lldap
+</p>
+<h4 id=usage>Usage:</h4>
+<p>
+check_ldap_logout [-h] | -H &lt;ldap host&gt; [-p &lt;ldap port&gt;] -U &lt;ldap user&gt; -P &lt;ldap pass&gt; -B &lt;base DN&gt; -C &lt;account_name&gt; [-v]
+</p>
+<h4 id=options>Options:</h4>
+<p>
+-h, --help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print this help message
+</p>
+-H, --host=HOSTNAME|IP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name or IP address of host to check
+</p>
+<p>
+-p, --port=INTEGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the LDAP server's TCP port number (Default: 389)
+</p>
+-U, --user=STRING<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the LDAP bind user DN
+</p>
+<p>
+-P, --pass=STRING<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the LDAP bind users password
+</p>
+-B, --base=STRING<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the LDAP base to search from (eg. ou=my unit, o=my org)
+</p>
+<p>
+-C, --check=STRING<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the the AD account name to check for lockout
+</p>
+<p>
+-V, --version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prints version number
+</p>
+<p>
+-v, --verbose<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print extra debugging information 
+</p>
+<h4 id=plugindefinition>Plugin Definition Example:</h4>
+<p>
+Below is an example of the plugin definition in the Nagios command.cfg file.
+</p>
+<pre><code># check_ldap_lockout nagios plugin
+define command{
+  command_name check_ldap_lockout
+  command_line $USER1$/check_ldap_lockout -H $HOSTADDRESS$ -U $ARG1$ -P $ARG2$ -B $ARG3$ -C $ARG4$
+}</code></pre>
+<p></p>
+<h4 id=pluginexample>Plugin Usage Example:</h4>
+<p>
+The plugin with its most basic use, returning the account lockout status of the Windows account 'support' against a AD domain controller with IP 192.168.1.25, using the AD account 'ldap' for queries in domain 'frank4dd.com'.
+</p>
+<pre class=code>susie: ~ # cd /srv/app/nagios/libexec
+susie: ~ # ./check_ldap_lockout -H 192.168.1.25 -U ldap@frank4dd.com -P p@ssw0rd -B OU=User,DC=frank4dd,DC=com -C support
+OK: Account support is active</pre>
+  <p>
+A example query with a user being locked out:
+  </p>
+<pre class=code>susie: ~ # ./check_ldap_lockout -H 192.158.1.25 -U ldap@frank4dd.com -P  p@ssw0rd -B OU=User,DC=frank4dd,DC=com -C support
+CRITICAL: Account support locked out at Tue Dec 28 09:53:19 2010</pre>
+  <p>
+A example query with verbose output for troubleshooting:
+  </p>
+<pre class=code>susie: ~ # cd /srv/app/nagios/libexec
+susie: ~ # ./check_ldap_lockout -H 192.168.1.25 -U ldap@frank4dd.com -P p@ssw0rd -B OU=User,DC=frank4dd,DC=com -C support -v
+Connecting to host [192.168.1.25] at port [389] with user [ldap@frank4dd.com] and pw [p@ssw0rd]
+Generated LDAP handle.
+Set LDAPv3 client version.
+LDAP connection successful.
+Using Search filter [(&amp;(objectClass=user)(sAMAccountName=support))].
+LDAP search successful.
+LDAP search returned 1 objects.
+Found object [CN=support,OU=IT_Department,OU=User,DC=frank4dd,DC=com]
+Found attribute: [displayName] value [IT Support Account]
+Found attribute: [lockoutTime] value [0]
+Windows timestring converted to number [0]
+OK: Account support is active</pre>
+</div>
+</body></html>
