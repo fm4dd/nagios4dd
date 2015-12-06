@@ -46,7 +46,7 @@ It requires SNMP access to the Avaya media server, which is configured in the ma
 
 -L, --protocols=[authproto],[privproto]
       [authproto]: Authentication protocol (md5|sha : default md5)
-      [privproto]: Priv protocole (des|aes : default des)
+      [privproto]: Priv protocol (des|aes : default des)
 
 -p, --port=PORT
       SNMP port (Default 161)
