@@ -10,5 +10,5 @@ This shortens the time for problem identification, increases problem transparenc
 
 See also: http://nagios.fm4dd.com/howto/nagios-flexible-notifications.htm
 
-Service Notification Example:
+Service Notification Example:<br>
 ![Alt text](http://nagios.fm4dd.com/howto/images/notification-graph-en-service-crit1.png "Service Notification Example")
