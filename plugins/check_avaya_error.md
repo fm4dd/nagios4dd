@@ -1,10 +1,10 @@
 # check_avaya_error
 
-## Man page for the Nagios plugin check_avaya_error
+## Man page for the Nagios plugin check_avaya_error.pl
 
 Updated (c) 2010 Frank4DD<support[at]frank4dd.com>
 
-### check_avaya_error
+### check_avaya_error.pl
 
 * * *
 
@@ -90,30 +90,29 @@ The plugin checking for server log warnings.
 
 <pre class="code">susie: ~ # cd /srv/app/nagios/libexec
 susie: ~ # ./check_avaya_error.pl -H 192.168.65.11 -C SECro -S CML -E WRN
-WARNING: WARNING Alarmport: 01A11, MaintName: UDS1-BD, Date: 28.11\. Time: 22:17
-WARNING Alarmport: 01B11, MaintName: UDS1-BD, Date: 28.11\. Time: 22:17
-WARNING Alarmport: 02A11, MaintName: UDS1-BD, Date: 29.11\. Time: 15:32
-WARNING Alarmport: 02A14, MaintName: UDS1-BD, Date: 29.11\. Time: 15:32
-WARNING Alarmport: 02B11, MaintName: UDS1-BD, Date: 03.12\. Time: 12:08
-WARNING Alarmport: 02B14, MaintName: UDS1-BD, Date: 28.11\. Time: 22:17
-WARNING Alarmport: S00159, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00246, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00250, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00386, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00410, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00483, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00500, MaintName: DIG-IP-S, Date: 09.12\. Time: 10:50
-WARNING Alarmport: S00503, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00637, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00653, MaintName: DIG-IP-S, Date: 13.12\. Time: 12:52
-WARNING Alarmport: S00667, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S00806, MaintName: DIG-IP-S, Date: 03.12\. Time: 12:57
-WARNING Alarmport: S00852, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S01074, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: S01148, MaintName: DIG-IP-S, Date: 07.12\. Time: 13:21
-WARNING Alarmport: S01172, MaintName: DIG-IP-S, Date: 28.11\. Time: 22:21
-WARNING Alarmport: 01A0718, MaintName: AN-LN-PT, Date: 
-29.11\. Time: 22:15
-WARNING Alarmport: 02A0706, MaintName: AN-LN-PT, Date: 29.11\. Time: 22:16
-WARNING Alarmport: 02A0707, MaintName: AN-LN-PT, Date: 29.11\. Time: 22:16
-WARNING Alarmport: 02A0714, MaintName: AN-LN-PT, Date: 30.11\. Time: 22:15</pre>
+WARNING: WARNING Alarmport: 01A11, MaintName: UDS1-BD, Date: 28.11. Time: 22:17
+WARNING Alarmport: 01B11, MaintName: UDS1-BD, Date: 28.11. Time: 22:17
+WARNING Alarmport: 02A11, MaintName: UDS1-BD, Date: 29.11. Time: 15:32
+WARNING Alarmport: 02A14, MaintName: UDS1-BD, Date: 29.11. Time: 15:32
+WARNING Alarmport: 02B11, MaintName: UDS1-BD, Date: 03.12. Time: 12:08
+WARNING Alarmport: 02B14, MaintName: UDS1-BD, Date: 28.11. Time: 22:17
+WARNING Alarmport: S00159, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00246, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00250, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00386, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00410, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00483, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00500, MaintName: DIG-IP-S, Date: 09.12. Time: 10:50
+WARNING Alarmport: S00503, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00637, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00653, MaintName: DIG-IP-S, Date: 13.12. Time: 12:52
+WARNING Alarmport: S00667, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S00806, MaintName: DIG-IP-S, Date: 03.12. Time: 12:57
+WARNING Alarmport: S00852, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S01074, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: S01148, MaintName: DIG-IP-S, Date: 07.12. Time: 13:21
+WARNING Alarmport: S01172, MaintName: DIG-IP-S, Date: 28.11. Time: 22:21
+WARNING Alarmport: 01A0718, MaintName: AN-LN-PT, Date: 29.11. Time: 22:15
+WARNING Alarmport: 02A0706, MaintName: AN-LN-PT, Date: 29.11. Time: 22:16
+WARNING Alarmport: 02A0707, MaintName: AN-LN-PT, Date: 29.11. Time: 22:16
+WARNING Alarmport: 02A0714, MaintName: AN-LN-PT, Date: 30.11. Time: 22:15</pre>
