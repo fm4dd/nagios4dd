@@ -115,4 +115,4 @@ Version WARN: DB2 v9.5.0.3 build s081210 vulnerable (low-medium)|Needs 9.5.0.5 (
 * * *
 
 The plugin's .java source code file needs to be compiled into Java bytecode before it can be used, i.e. by calling:  
-_javac check_dbversion_db2.java_.
+_javac check_dbversion_db2.java_. 
