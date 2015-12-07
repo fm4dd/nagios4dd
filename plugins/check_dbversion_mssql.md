@@ -95,8 +95,8 @@ The plugin in 'compliance' mode, returns the status depending on the version str
 
 <pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_mssql 192.168.1.127 1433 master sa "p@ssw0rd"
  -f /srv/app/nagios/libexec/check_dbversion.cfg 
-Version WARN: Microsoft SQL Server v9.00.4053.00 SP3 vulnerable (low-medium)|Dec 15,2008 release, missing later patches,
- http://sqlserverbuilds.blogspot.com/</pre>
+Version WARN: Microsoft SQL Server v9.00.4053.00 SP3 vulnerable (low-medium)|Dec 15,2008 release, missing later
+ patches, http://sqlserverbuilds.blogspot.com/</pre>
 
 #### Notes:
 
