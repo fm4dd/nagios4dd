@@ -90,12 +90,13 @@ The blacklist/whitelist file for comparing database versions against consists of
 
 The plugin in 'discovery' mode, returns OK if the software version string could be fetched.
 
-<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_mysql 192.168.1.34 3306 mysql root "p@ssw0rd"              
+<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_mysql 192.168.1.34 3306 mysql root "p@ssw0rd"
 Version OK: MySQL v5.0.26, SUSE MySQL RPM x86_64|</pre>
 
 The plugin in 'compliance' mode, returns the status depending on the version string definition set in the supplied config file.
 
-<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_mysql 192.168.1.34 3306 mysql root "p@ssw0rd" -f /srv/app/nagios/libexec/check_dbversion.cfg 
+<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_mysql 192.168.1.34 3306 mysql root "p@ssw0rd"
+ -f /srv/app/nagios/libexec/check_dbversion.cfg 
 Version OK: MySQL v5.0.26|Novell SLES10 SP3 software repository version of MySQL</pre>
 
 #### Notes:
