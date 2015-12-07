@@ -14,7 +14,9 @@ It requires the database to be set up for accepting network connections and bein
 
 #### Usage:
 
-`java -classpath <path to check_dbversion_mssql.class> check_dbversion_mssql <db-ip> <db-port> <db-instance> <db-user> <db-pwd> [-d]` `java -classpath <path to check_dbversion_mssql.class> check_tablespace_mssql <db-ip> <db-port> <db-instance> <db-user> <db-pwd> -f configfile`
+`java -classpath <path to check_dbversion_mssql.class> check_dbversion_mssql <db-ip> <db-port> <db-instance> <db-user> <db-pwd> [-d]`
+
+`java -classpath <path to check_dbversion_mssql.class> check_tablespace_mssql <db-ip> <db-port> <db-instance> <db-user> <db-pwd> -f configfile`
 
 #### Options:
 
