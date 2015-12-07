@@ -16,7 +16,9 @@ It requires the database to be set up for accepting network connections and bein
 
 * * *
 
-`java -classpath <path to check_dbversion_db2.class> check_dbversion_db2 <db-ip> <db-port> <db-instance> <db-user> <db-pwd> [-d]` `java -classpath <path to check_dbversion_db2.class> check_tablespace_db2 <db-ip> <db-port> <db-instance> <db-user> <db-pwd> -f configfile`
+`java -classpath <path to check_dbversion_db2.class> check_dbversion_db2 <db-ip> <db-port> <db-instance> <db-user> <db-pwd> [-d]`
+
+`java -classpath <path to check_dbversion_db2.class> check_tablespace_db2 <db-ip> <db-port> <db-instance> <db-user> <db-pwd> -f configfile`
 
 ### Options:
 
