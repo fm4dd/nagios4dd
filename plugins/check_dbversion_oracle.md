@@ -90,15 +90,14 @@ The blacklist/whitelist file for comparing database versions against consists of
 
 The plugin in 'discovery' mode, returns OK if the software version string could be fetched.
 
-<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_oracle 192.168.1.151 1521 ORADB system "p@ssw0rd"
+<pre>susie:~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_oracle 192.168.1.151 1521 ORADB system "p@ssw0rd"
 Version OK: Oracle v10.2.0.3.0|Oracle Database 10g Enterprise Edition v10.2.0.3.</pre>
 
 The plugin in 'compliance' mode, returns the status depending on the version string definition set in the supplied config file.
 
-<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_oracle 192.168.1.151 1521 ORADB system "p@ssw0rd"
+<pre>susie:~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_oracle 192.168.1.151 1521 ORADB system "p@ssw0rd"
  -f /srv/app/nagios/libexec/check_dbversion.cfg 
-Version WARN: Oracle v10.2.0.3.0 vulnerable (low-medium)|Vulnerable, latest
- patch release is v10.2.0.5.0, see
+Version WARN: Oracle v10.2.0.3.0 vulnerable (low-medium)|Vulnerable, latest patch release is v10.2.0.5.0, see
  http://www.oracle.com/technology/deploy/security/alerts.htm</pre>
 
 #### Notes:
