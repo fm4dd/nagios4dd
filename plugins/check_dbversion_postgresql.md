@@ -90,7 +90,8 @@ Version OK: PostgreSQL 9.3.2 on x86_64-unknown-linux-gnu 64-bit|</pre>
 
 The plugin in 'compliance' mode, returns the status depending on the version string definition set in the supplied config file.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_dbversion_postgresql 192.168.1.127 5432 postgres pgsql p0stpass -f /srv/app/nagios/libexec/check_dbversion.cfg
+<pre># java -classpath /srv/app/nagios/libexec/ check_dbversion_postgresql 192.168.1.127 5432 postgres pgsql p0stpass -f
+ /srv/app/nagios/libexec/check_dbversion.cfg
 Version OK: PostgreSQL 9.3.2 on x86_64-unknown-linux-gnu 64-bit|Installed from Source 20140124</pre>
 
 #### Notes:
