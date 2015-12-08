@@ -6,7 +6,7 @@ Copyright (c) 2014 Frank4DD<support[at]frank4dd.com>
 
 * * *
 
-**Note: This plugin just got a simple test. Please consider feedback to improve it. Thank You!**
+**Note: This plugin got limited testing. Please consider feedback to improve it. Thank You!**
 
 This plugin tests the database software version through querying a specific Sybase ASE database. It can either simply return the version string (discovery mode), or compare it against a blacklist/whitelist version file to determine software version compliance (compliance mode). Since it executes a real database login, it can also be used to determine database up|down.
 
@@ -93,8 +93,8 @@ Version OK: Adaptive Server Enterprise v15.7 ase157sp101, 3439|</pre>
 
 The plugin in 'compliance' mode, returns the status depending on the version string definition set in the supplied config file.
 
-<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_sybase 192.168.1.127 5000 master sa "p@ssw0rd" -f 
-/srv/app/nagios/libexec/check_dbversion.cfg 
+<pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_sybase 192.168.1.127 5000 master sa "p@ssw0rd"
+ -f /srv/app/nagios/libexec/check_dbversion.cfg 
 Version OK: Adaptive Server Enterprise v15.7 ase157sp101, 3439|Latest Version 15.7 SP1, 6 Jun 2013</pre>
 
 #### Notes:
