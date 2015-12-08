@@ -97,8 +97,7 @@ Version OK: PostgreSQL 9.3.2 on x86_64-unknown-linux-gnu 64-bit|Installed from S
 
 The plugin queries PostgreSQL with the "SELECT version()"command. The PostgreSQL database responds with a version string containing 3 fields, separated by a comma. A string example is below.
 
-<pre>PostgreSQL 9.3.2 on x86_64-unknown-linux-gnu, compiled by gcc (SUSE Linux) 4.7.2
- 20130108 [gcc-4_7-branch revision 195012], 64-bit</pre>
+`PostgreSQL 9.3.2 on x86_64-unknown-linux-gnu, compiled by gcc (SUSE Linux) 4.7.2 20130108 [gcc-4_7-branch revision 195012], 64-bit`
 
 The plugin's .java source code file needs to be compiled into Java bytecode before it can be used, i.e. by calling:  
 _javac check_dbversion_postgresql.java_.
