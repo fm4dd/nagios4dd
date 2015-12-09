@@ -99,4 +99,15 @@ IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA9, RELEASE SOFTWARE 
 Copyright (c) 1986-2006 by cisco Systems, Inc.
 Compiled Fri 01-Dec-06 18:02 by weiliu</pre>
 
+### Nagios Output:
+
+* * *
+
 ![](images/check_snmp_patchlevel-example1.png)
+
+### Notes:
+
+* * *
+
+See also the how-to at 
+[(http://nagios.fm4dd.com/howto/cisco-patch-update-monitoring.htm)](http://nagios.fm4dd.com/howto/cisco-patch-update-monitoring.htm)
