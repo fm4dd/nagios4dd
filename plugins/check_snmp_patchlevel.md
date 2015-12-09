@@ -20,8 +20,8 @@ The plugin depends on Perl's Net::SNMP package, i.e. perl-SNMP-5.3.0.1-25.34.1.
 
 #### Options:
 
--H 
-The IP address of the device
+-H
+      The IP address of the device
 
 -v, --snmp-version [1|2]
       The SNMP version to use: 1 or 2c
