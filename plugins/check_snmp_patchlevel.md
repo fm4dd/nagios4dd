@@ -20,16 +20,16 @@ The plugin depends on Perl's Net::SNMP package, i.e. perl-SNMP-5.3.0.1-25.34.1.
 
 #### Options:
 
--H
+-H  
       The IP address of the device
 
--v, --snmp-version [1|2]
+-v, --snmp-version [1|2]  
       The SNMP version to use: 1 or 2c
 
--g, --devicegroup=[ios|asa|pix]
+-g, --devicegroup=[ios|asa|pix]  
       OS version string to expect: ios = Cisco IOS devices, asa = Cisco ASA Appliances, pix = Cisco PIX Firewalls 
 
--C, --community=community
+-C, --community=community  
       SNMP read community string (default public)
 
 -f configfile  
