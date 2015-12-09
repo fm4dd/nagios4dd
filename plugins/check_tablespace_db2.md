@@ -56,7 +56,8 @@ Tablespace OK: USERSPACE1 11% used|USERSPACE1: 3 datafiles, used 732032 KB of 62
 
 The plugin in 'check' mode, returns the status depending on the tablespace size exceeding the WARN and CRIT threshold values.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64 50000 DB2 db2admin "p@ssw0rd" USERSPACE1 732032 732034
+<pre># java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64 50000 DB2 db2admin "p@ssw0rd" USERSPACE1
+ 732032 732034
 Tablespace WARN: USERSPACE1 11% used|USERSPACE1: 3 datafiles, used 732032 KB of
  6291456 KB total</pre>
 
