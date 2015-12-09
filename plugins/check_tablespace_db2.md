@@ -50,10 +50,9 @@ It requires the database to be set up for accepting network connections and bein
 
 The plugin in 'reporting' mode, returns OK if the tablespace size could be fetched.
 
-    # java -classpath /srv/app/nagios/libexec/ check_tablespace_db2 192.168.1.64
-    50000 DB2 db2admin "p@ssw0rd" -r USERSPACE1
-    Tablespace OK: USERSPACE1 11% used|USERSPACE1: 3 datafiles, used 732032 KB of
-     6291456 KB total
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_db2 192.168.1.64 50000 DB2 db2admin "p@ssw0rd" -r
+ USERSPACE1
+Tablespace OK: USERSPACE1 11% used|USERSPACE1: 3 datafiles, used 732032 KB of 6291456 KB total</pre>
 
 The plugin in 'check' mode, returns the status depending on the tablespace size exceeding the WARN and CRIT threshold values.
 
