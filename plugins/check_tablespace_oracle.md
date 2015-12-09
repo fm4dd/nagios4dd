@@ -50,12 +50,14 @@ It requires the database to be set up for accepting network connections and bein
 
 The plugin in 'reporting' mode, returns OK if the tablespace size could be fetched.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle 192.168.98.151 1521  ORADB system "p@ssw0rd" -r G02IND01
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle 192.168.98.151 1521  ORADB system "p@ssw0rd" -r
+ G02IND01
 Tablespace OK: G02IND01 20% used|G02IND01: 3 datafiles, used 5120 KB of 9216 KB total</pre>
 
 The plugin in 'check' mode, returns the status depending on the tablespace size exceeding the WARN and CRIT threshold values.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle 192.168.98.151 1521  ORADB system "p@ssw0rd" G02IND01 5120 5121
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle 192.168.98.151 1521  ORADB system "p@ssw0rd"
+ G02IND01 5120 5121
 Tablespace WARN: G02IND01 20% used|G02IND01: 3 datafiles, used 5120 KB of 9216 KB total</pre>
 
 The plugin in 'debug' mode, listing all tablespaces configured for this database.
