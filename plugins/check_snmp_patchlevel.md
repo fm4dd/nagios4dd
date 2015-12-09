@@ -98,3 +98,5 @@ IOS Version: 12.1(22)EA9 obsolete | Remarks: end-of-maintenance date 2008-03-15 
 IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)
 Copyright (c) 1986-2006 by cisco Systems, Inc.
 Compiled Fri 01-Dec-06 18:02 by weiliu</pre>
+
+![](images/check_snmp_patchlevel-example1.png)
