@@ -76,7 +76,6 @@ med-vuln|ios|12.4(6)T8|multiple DOS confirmed (Voice, Stack)
 med-vuln|ios|12.4(9)T4|SSH DOS confirmed, replaced with 12.4(15)T5
 med-vuln|ios|12.4(15)T1|SSH DOS confirmed, replaced with 12.4(15)T5
 med-vuln|ios|12.4(10a)|SSH DOS confirmed, replaced with 12.4(18b)
-
 ######################################################################
 # Below are the 'crit-vuln' versions confirmed for high criticality  #
 ######################################################################</pre>
