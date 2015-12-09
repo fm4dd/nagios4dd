@@ -40,11 +40,11 @@ It requires the database to be set up for accepting network connections and bein
 -d  
       Enable debugging output, lists all available tablespaces
 
--r <tablespace>  
+-r [tablespace]  
       Reporting tablespace size, always returns OK
 
-<tablespace> <KB-warn> <KB-crit>  
-      Set tablesapce name and alert thresholds for WARN and CRIT in Kbytes
+[tablespace] [KB-warn> [KB-crit]  
+      Set tablespace name and alert thresholds for WARN and CRIT in Kbytes
 
 #### Plugin Usage Example:
 
