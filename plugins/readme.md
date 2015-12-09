@@ -1,7 +1,5 @@
 # Nagios Plugin List
 
-## List of locally developed or modified Nagios plugins
-
 Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### Introduction
