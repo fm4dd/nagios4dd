@@ -110,4 +110,4 @@ Compiled Fri 01-Dec-06 18:02 by weiliu</pre>
 * * *
 
 See also the how-to at 
-[(http://nagios.fm4dd.com/howto/cisco-patch-update-monitoring.htm)](http://nagios.fm4dd.com/howto/cisco-patch-update-monitoring.htm)
+[http://nagios.fm4dd.com/howto/cisco-patch-update-monitoring.htm](http://nagios.fm4dd.com/howto/cisco-patch-update-monitoring.htm)
