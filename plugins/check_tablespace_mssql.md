@@ -43,7 +43,7 @@ It requires the database to be set up for accepting network connections and bein
 -r  
       Reporting tablespace size, always returns OK
 
-<KB-warn> <KB-crit>  
+[KB-warn] [KB-crit]  
       Set alert thresholds for WARN and CRIT in Kbytes
 
 #### Plugin Usage Example:
