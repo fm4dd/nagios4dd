@@ -41,7 +41,7 @@ It requires the database to be set up for accepting network connections and bein
       Enable debugging output, lists all available tablespaces
 
 -r <tablespace>  
-      Reporting tablesapce size, always returns OK
+      Reporting tablespace size, always returns OK
 
 <tablespace> <KB-warn> <KB-crit>  
       Set tablesapce name and alert thresholds for WARN and CRIT in Kbytes
