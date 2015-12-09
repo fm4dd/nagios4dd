@@ -50,20 +50,18 @@ It requires the database to be set up for accepting network connections and bein
 
 The plugin in 'reporting' mode, returns OK if the tablespace size could be fetched.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128
- 3306 edacs "edacsread" "dbpass" -r
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128 3306 edacs "edacsread" "dbpass" -r
 Tablespace OK: edacs 4961 KBytes|edacs: 27 datafiles, 4961 KB</pre>
 
 The plugin in 'check' mode, returns the status depending on the tablespace size exceeding the WARN and CRIT threshold values.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128
- 3306 edacs "edacsread" "dbpass" 4000 5000
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128 3306 edacs "edacsread" "dbpass" 4000
+ 5000
 Tablespace WARN: edacs 4961 KBytes|edacs: 27 datafiles, 4961 KB</pre>
 
 The plugin in 'debug' mode, showing individual data file sizes for this database.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128
- 3306 edacs "edacsread" "dbpass" -d
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128 3306 edacs "edacsread" "dbpass" -d
 DB connect: jdbc:mysql://192.168.98.128:3306/edacs?user=edacsread&password=dbpass
 File Name:       edacs_daystats Space used:         11 KB
 File Name:        edacs_mainlog Space used:       1520 KB
