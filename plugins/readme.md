@@ -8,9 +8,9 @@ Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 * * *
 
-This is the list of Nagios plugins I developed or modified for the enterprise monitoring environments. All are made available under the GPL license for free re-use and further improvements.
+This is a set of Nagios plugins I developed or modified for the enterprise monitoring environments. All are made available under the GPL license for free re-use and further improvements.
 
-The plugins have been tested to be working with Nagios version 3.x and work with the latest Nagios version 4.x
+The plugins have been tested to be working since Nagios version 3.x, and work with the latest Nagios versions under 4.x
 
 ### Operating System Monitoring Plugins
 
