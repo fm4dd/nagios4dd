@@ -85,10 +85,17 @@ med-vuln|ios|12.4(10a)|SSH DOS confirmed, replaced with 12.4(18b)
 
 The plugin in 'discovery' mode, returns OK if the software version string could be fetched.
 
-<pre>susie: ~ # ./check_snmp_patchlevel.pl -H 192.168.1.34 -v 1 -g ios -C NBNsec
-IOS Version: 12.4(6)T11|For all internal routers</pre>
+<pre>susie: ~ # ./check_snmp_patchlevel.pl -H 192.168.203.4 -g ios -C SECro
+IOS Version: 12.1(22)EA9 | Cisco Internetwork Operating System Software
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)
+Copyright (c) 1986-2006 by cisco Systems, Inc.
+Compiled Fri 01-Dec-06 18:02 by weiliu</pre>
 
 The plugin in 'compliance' mode, returns the status depending on the version string definition set in the supplied config file.
 
-<pre>susie: ~ # ./check_snmp_patchlevel.pl -H 192.168.1.34 -v 1 -g ios -C NBNsec -f /nagios/etc/objects/check_patchlevel.cfg 
-IOS Version: 12.4(6)T11 approved|For all internal routers</pre>
+<pre>susie: ~ # ./check_snmp_patchlevel.pl -H 192.168.203.4 -g ios -C SECro -f  ./check_snmp_patchlevel.cfg
+IOS Version: 12.1(22)EA9 obsolete | Remarks: end-of-maintenance date 2008-03-15 Data:
+ Cisco Internetwork Operating System Software
+IOS (tm) C2950 Software (C2950-I6Q4L2-M), Version 12.1(22)EA9, RELEASE SOFTWARE (fc1)
+Copyright (c) 1986-2006 by cisco Systems, Inc.
+Compiled Fri 01-Dec-06 18:02 by weiliu</pre>
