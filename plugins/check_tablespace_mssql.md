@@ -55,14 +55,14 @@ Tablespace OK: contacts 408947 KBytes|contacts: 1 datafiles, 1 logfiles, used 40
 
 The plugin in 'check' mode, returns the status depending on the tablespace size exceeding the WARN and CRIT threshold values.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mssql 192.168.98.128 1433 contacts "sa" "dbpass" 300000 500000
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mssql 192.168.98.128 1433 contacts "sa" "dbpass" 300000
+ 500000
 Tablespace WARN: contacts 408947 KBytes|contacts: 1 datafiles, 1 logfiles, used 408947 KB</pre>
 
 The plugin in 'debug' mode, showing individual data file sizes for this database.
 
 <pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mssql 192.168.98.128 1433 contacts "sa" "dbpass" -d
-DB connect: jdbc:sqlserver://1192.168.98.128:1433;databaseName=contacts;user=sa;
-password=dbpass;
+DB connect: jdbc:sqlserver://1192.168.98.128:1433;databaseName=contacts;user=sa; password=dbpass;
 File Name: D:\SQLServer\Data\Contacts.mdf Space used:     400000 KB
 File Name: D:\SQLServer\Data\Contacts_log.ldf Space used:       8947 KB</pre>
 
