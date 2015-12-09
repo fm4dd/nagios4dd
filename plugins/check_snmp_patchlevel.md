@@ -91,4 +91,4 @@ IOS Version: 12.4(6)T11|For all internal routers</pre>
 The plugin in 'compliance' mode, returns the status depending on the version string definition set in the supplied config file.
 
 <pre>susie: ~ # ./check_snmp_patchlevel.pl -H 192.168.1.34 -v 1 -g ios -C NBNsec -f /nagios/etc/objects/check_patchlevel.cfg 
-IOS Version: 12.4(6)T11i approved|For all internal routers</pre>
+IOS Version: 12.4(6)T11 approved|For all internal routers</pre>
