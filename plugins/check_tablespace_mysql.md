@@ -55,8 +55,8 @@ Tablespace OK: edacs 4961 KBytes|edacs: 27 datafiles, 4961 KB</pre>
 
 The plugin in 'check' mode, returns the status depending on the tablespace size exceeding the WARN and CRIT threshold values.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128 3306 edacs "edacsread" "dbpass" 4000
- 5000
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_mysql 192.168.98.128 3306 edacs "edacsread" "dbpass"
+ 4000 5000
 Tablespace WARN: edacs 4961 KBytes|edacs: 27 datafiles, 4961 KB</pre>
 
 The plugin in 'debug' mode, showing individual data file sizes for this database.
