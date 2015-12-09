@@ -93,8 +93,3 @@ The plugin in 'compliance' mode, returns the status depending on the version str
 <pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_snmp_patchlevel.pl 192.168.1.34 3306 mysql root "p@ssw0rd"
  -f /srv/app/nagios/libexec/check_dbversion.cfg 
 Version OK: MySQL v5.0.26|Novell SLES10 SP3 software repository version of MySQL</pre>
-
-#### Notes:
-
-The plugin's .java source code file needs to be compiled into Java bytecode before it can be used, i.e. by calling:  
-_javac check_snmp_patchlevel.pl.java_.
