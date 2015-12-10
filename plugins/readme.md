@@ -16,7 +16,7 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
-| 1 | [check-aix-update.pl](check-aix-update.pl) | 1.0 | Checks the patch update status on IBM AIX servers | [howto](/howto/aix-patch-update-monitoring.htm) |
+| 1 | <a href="check-aix-update.pl">check-aix-update.pl</a> | 1.0 | Checks the patch update status on IBM AIX servers | [howto](/howto/aix-patch-update-monitoring.htm) |
 | 2 | [win_update_trapsend.vbs](source/win_update_trapsend.vbs) | 1.0 | Checks the patch update status on Windows servers | [howto](/howto/windows-patch-update-monitoring.htm) |
 | 3 | [check-rug-update.pl](source/check-rug-update.pl) | 1.1 | Checks the patch update status on SLES Linux servers | [howto](/howto/sles10-patch-update-monitoring.htm) |
 | 4 | [check-rum-update.pl](source/check-rum-update.pl) | 1.0 | Checks the patch update status on OpeSUSE servers | [howto](/howto/opensuse-patch-update-monitoring.htm) |
