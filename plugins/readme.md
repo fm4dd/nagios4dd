@@ -18,9 +18,9 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 |---|------|------|-------------|-------|
 | 1 | [check_aix_update.pl](check_aix_update.pl) | 1.0 | Checks the patch update status on IBM AIX servers | [howto](/howto/aix-patch-update-monitoring.htm) |
 | 2 | [win_update_trapsend.vbs](win_update_trapsend.vbs) | 1.0 | Checks the patch update status on Windows servers | [howto](/howto/windows-patch-update-monitoring.htm) |
-| 3 | [check-rug-update.pl](check-rug-update.pl) | 1.1 | Checks the patch update status on SLES Linux servers | [howto](/howto/sles10-patch-update-monitoring.htm) |
+| 3 | [check_rug_update.pl](check-rug-update.pl) | 1.1 | Checks the patch update status on SLES Linux servers | [howto](/howto/sles10-patch-update-monitoring.htm) |
 | 4 | [check-rum-update.pl](check-rum-update.pl) | 1.0 | Checks the patch update status on OpeSUSE servers | [howto](/howto/opensuse-patch-update-monitoring.htm) |
-| 5 | [check-zypper-update.pl](check-zypper-update.pl) | 1.0 | Checks the patch update status on OpenSUSE/SLES servers | [howto](/howto/sles10-patch-update-monitoring.htm) |
+| 5 | [check_zypper_update.pl](check-zypper-update.pl) | 1.0 | Checks the patch update status on OpenSUSE/SLES servers | [howto](/howto/sles10-patch-update-monitoring.htm) |
 | 6 | [check_snmp_time.pl](check_snmp_time.pl) | 1.1 | Checks the operating systems time difference against Nagios server time | [manual](check_snmp_time.htm) |
 | 7 | [check_snmp_aixload.pl](check_snmp_aixload.pl) | 1.0 | Reports IBM's AIX CPU load | [manual](check_snmp_aixload.htm) |
 
@@ -30,12 +30,12 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
-| 8 | [check_snmp_patchlevel.pl](check_snmp_patchlevel.pl) | 1.2 | Checks the Cisco OS version against a compliance list | [howto](/howto/cisco-patch-update-monitoring.htm) |
-| 9 | [check_avaya_load.pl](check_avaya_load.pl) | 1.0 | Checks the CPU load on Avaya VOIP PBX media servers | [manual](check_avaya_load.htm) |
-| 10 | [check_avaya_error.pl](check_avaya_error.pl) | 1.2 | Checks the error logs on Avaya VOIP PBX media servers | [manual](check_avaya_error.htm) |
-| 11 | [check_avaya_trunks.pl](check_avaya_trunks.pl) | 1.0 | Checks the call utilization of a trunk group on Avaya VOIP PBX media servers | [manual](check_avaya_trunks.htm) |
-| 12 | [check_avaya_peak.pl](check_avaya_peak.pl) | 1.0 | Checks the hourly peak call number on Avaya VOIP PBX media servers | [manual](check_avaya_peak.htm) |
-| 13 | [check_asa_sessions.pl](check_asa_sessions.pl) | 0.2 | Checks All, or IpSec, SslVPN and WebVPN sessions in a Cisco ASA | [manual](check_asa_sessions.htm) |
+| 8 | [check_snmp_patchlevel.pl](check_snmp_patchlevel.pl) | 1.2 | Checks the Cisco OS version against a compliance list | [manual](check_snmp_patchlevel.md) |
+| 9 | [check_avaya_load.pl](check_avaya_load.pl) | 1.0 | Checks the CPU load on Avaya VOIP PBX media servers | [manual](check_avaya_load.md) |
+| 10 | [check_avaya_error.pl](check_avaya_error.pl) | 1.2 | Checks the error logs on Avaya VOIP PBX media servers | [manual](check_avaya_error.md) |
+| 11 | [check_avaya_trunks.pl](check_avaya_trunks.pl) | 1.0 | Checks the call utilization of a trunk group on Avaya VOIP PBX media servers | [manual](check_avaya_trunks.md) |
+| 12 | [check_avaya_peak.pl](check_avaya_peak.pl) | 1.0 | Checks the hourly peak call number on Avaya VOIP PBX media servers | [manual](check_avaya_peak.md) |
+| 13 | [check_asa_sessions.pl](check_asa_sessions.pl) | 0.2 | Checks All, or IpSec, SslVPN and WebVPN sessions in a Cisco ASA | [manual](check_asa_sessions.md) |
 
 ### Database Monitoring Plugins
 
