@@ -43,16 +43,16 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
-| 14 | [check_dbversion_db2.java](check_dbversion_db2.java) | 1.0 | Checks the DB2 software version against a compliance list | [manual](check_dbversion_db2.htm) |
-| 15 | [check_dbversion_mssql.java](check_dbversion_mssql.java) | 1.0 | Checks the SQL server software version against a compliance list | [manual](check_dbversion_mssql.htm) |
-| 16 | [check_dbversion_oracle.java](check_dbversion_oracle.java) | 1.0 | Checks the Oracle software version against a compliance list | [manual](check_dbversion_oracle.htm) |
-| 17 | [check_dbversion_mysql.java](check_dbversion_mysql.java) | 1.0 | Checks the MySQL software version against a compliance list | [manual](check_dbversion_mysql.htm) |
-| 18 | [check_dbversion_sybase.java](check_dbversion_sybase.java) | 1.0 | Checks the Sybase software version against a compliance list | [manual](check_dbversion_sybase.htm) |
-| 19 | [check_dbversion_postgresql.java](check_dbversion_postgresql.java) | 1.0 | Checks the PostgreSQL software version against a compliance list | [manual](check_dbversion_postgresql.htm) |
-| 20 | [check_tablespace_db2.java](check_tablespace_db2.java) | 1.0 | Checks DB2 tablespace sizes against warn and crit thresholds | [manual](check_tablespace_db2.htm) |
-| 21 | [check_tablespace_mssql.java](check_tablespace_mssql.java) | 1.0 | Checks SQL Server tablespace sizes against warn and crit thresholds | [manual](check_tablespace_mssql.htm) |
-| 22 | [check_tablespace_oracle.java](check_tablespace_oracle.java) | 1.0 | Checks Oracle tablespace sizes against warn and crit thresholds | [manual](check_tablespace_oracle.htm) |
-| 23 | [check_tablespace_mysql.java](check_tablespace_mysql.java) | 1.0 | Checks MySQL tablespace sizes against warn and crit thresholds | [manual](check_tablespace_mysql.htm) |
+| 14 | [check_dbversion_db2.java](check_dbversion_db2.java) | 1.0 | Checks the DB2 software version against a compliance list | [manual](check_dbversion_db2.md) |
+| 15 | [check_dbversion_mssql.java](check_dbversion_mssql.java) | 1.0 | Checks the SQL server software version against a compliance list | [manual](check_dbversion_mssql.md) |
+| 16 | [check_dbversion_oracle.java](check_dbversion_oracle.java) | 1.0 | Checks the Oracle software version against a compliance list | [manual](check_dbversion_oracle.md) |
+| 17 | [check_dbversion_mysql.java](check_dbversion_mysql.java) | 1.0 | Checks the MySQL software version against a compliance list | [manual](check_dbversion_mysql.md) |
+| 18 | [check_dbversion_sybase.java](check_dbversion_sybase.java) | 1.0 | Checks the Sybase software version against a compliance list | [manual](check_dbversion_sybase.md) |
+| 19 | [check_dbversion_postgresql.java](check_dbversion_postgresql.java) | 1.0 | Checks the PostgreSQL software version against a compliance list | [manual](check_dbversion_postgresql.md) |
+| 20 | [check_tablespace_db2.java](check_tablespace_db2.java) | 1.0 | Checks DB2 tablespace sizes against warn and crit thresholds | [manual](check_tablespace_db2.md) |
+| 21 | [check_tablespace_mssql.java](check_tablespace_mssql.java) | 1.0 | Checks SQL Server tablespace sizes against warn and crit thresholds | [manual](check_tablespace_mssql.md) |
+| 22 | [check_tablespace_oracle.java](check_tablespace_oracle.java) | 1.0 | Checks Oracle tablespace sizes against warn and crit thresholds | [manual](check_tablespace_oracle.md) |
+| 23 | [check_tablespace_mysql.java](check_tablespace_mysql.java) | 1.0 | Checks MySQL tablespace sizes against warn and crit thresholds | [manual](check_tablespace_mysql.md) |
 
 ### Web Monitoring Plugins
 
@@ -62,7 +62,7 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 |---|------|------|-------------|-------|
 | 24 | [check_apachestatus.pl](check_apachestatus.pl) | 1.6 | Checks the apache sessions through the mod_status module | [howto](/howto/apache-session-monitoring-nagios.htm) |
 | 25 | [check_http.c](check_http.c) | 2.0 | Checks HTTP/S (SSL) websites through a proxy using the CONNECT method | [howto](/howto/monitor-ssl-websites-through-proxy.htm) |
-| 26 | [check_http_time.pl](check_http_time.pl) | 1.0 | Checks the remote web server time difference against Nagios server time | [manual](check_http_time.htm) |
+| 26 | [check_http_time.pl](check_http_time.pl) | 1.0 | Checks the remote web server time difference against Nagios server time | [manual](check_http_time.md) |
 
 ### Other Monitoring Plugins
 
@@ -70,9 +70,9 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
-| 27 | [check_ldap_lockout.c](check_ldap_lockout.c) | 1.2 | Checks if a given Windows domain user has been locked out (to many wrong password entries) | [manual](check_ldap_lockout.htm) |
+| 27 | [check_ldap_lockout.c](check_ldap_lockout.c) | 1.2 | Checks if a given Windows domain user has been locked out (to many wrong password entries) | [manual](check_ldap_lockout.md) |
 | 28 | [check_tokyo_radiation.pl](check_tokyo_radiation.pl) | 1.1 | Checks Tokyo air radiation levels published by Tokyo Metropolitan Government | [howto](/howto/nagios-monitoring-2011-tokyo-radiation.htm) |
 | 29 | [check_tokyo_tapwater.pl](check_tokyo_tapwater.pl) | 1.0 | Checks Tokyo tapwater radiation levels published by Tokyo Metropolitan Government | [howto](/howto/nagios-monitoring-2011-tokyo-radiation.htm) |
 | 30 | [check_tokyo_power.pl](check_tokyo_power.pl) | 1.0 | Checks Tokyo metropolitan electric power consumption published by Tepco | [howto](/howto/nagios-monitoring-2011-tokyo-radiation.htm) |
-| 31 | [check_fail2ban.sh](check_fail2ban.sh) | 1.2 | Monitors the number of IP's blocked by fail2ban, and gives feedback on brute-force attacks | [manual](check_fail2ban.htm) |
-| 32 | [check_nagiostats.pl](check_nagiostats.pl) | 1.0 | Checks Nagios plugin execution time, and host or service config totals. | [manual](check_nagiostats.htm) |
+| 31 | [check_fail2ban.sh](check_fail2ban.sh) | 1.2 | Monitors the number of IP's blocked by fail2ban, and gives feedback on brute-force attacks | [manual](check_fail2ban.md) |
+| 32 | [check_nagiostats.pl](check_nagiostats.pl) | 1.0 | Checks Nagios plugin execution time, and host or service config totals. | [manual](check_nagiostats.md) |
