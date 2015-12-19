@@ -21,7 +21,7 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 | 3 | [check_rug_update.pl](check_rug_update.pl) | 1.1 | Checks the patch update status on SLES Linux servers | [howto](http://nagios.fm4dd.com/howto/sles10-patch-update-monitoring.htm#rug-cmd) |
 | 4 | [check-rum-update.pl](check_rum_update.pl) | 1.0 | Checks the patch update status on OpeSUSE servers | [howto](http://nagios.fm4dd.com/howto/opensuse-patch-update-monitoring.htm) |
 | 5 | [check_zypper_update.pl](check_zypper_update.pl) | 1.0 | Checks the patch update status on OpenSUSE/SLES servers | [howto](/howto/sles10-patch-update-monitoring.htm) |
-| 6 | [check_ubuntu_update.pl](check_ubuntu_update.pl) | 1.0 | Checks the patch update status on Ubuntu servers | [manual](check_ubuntu_update.md) |
+| 6 | [check_ubuntu_update.pl](check_ubuntu_update.pl) | 0.7 | Checks the patch update status on Ubuntu servers | [manual](check_ubuntu_update.md) |
 | 7 | [check_snmp_time.pl](check_snmp_time.pl) | 1.1 | Checks the operating systems time difference against Nagios server time | [manual](check_snmp_time.md) |
 | 8 | [check_snmp_aixload.pl](check_snmp_aixload.pl) | 1.0 | Reports IBM's AIX CPU load | [manual](check_snmp_aixload.md) |
 

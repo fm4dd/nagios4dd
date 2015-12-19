@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 ########################### check_ubuntu_update.pl  ##################
-my $VERSION = '0.06';
+my $VERSION = '0.7';
 #
 # Original plugin: check_debian_packages
 #
@@ -10,7 +10,7 @@ my $VERSION = '0.06';
 #
 # Report bugs to: frankie@etsetb.upc.edu
 #
-# This program checks for outstanding patches for Ubuntu by calling
+# This program checks outstanding patches for Ubuntu by calling
 # the apt-get (or aptitude) tool.
 #####################################################################
 use strict;
