@@ -18,16 +18,16 @@ The plugin depends on the built-in 'apt-get' tool for retrieving update informat
 
 #### Options:
 
---debug 
+--debug   
       Add debug information for troubleshooting
 
 --version  
       Returns the plugin version
 
---help
+--help  
      Display the plugin usage information
 
---timeout=xx
+--timeout=xx  
      Sets a timeout to break from execution in cases of problems
 
 #### Plugin Usage Example:
