@@ -73,6 +73,12 @@ File Name:        edacs_templog Space used:       3364 KB
 File Name:          edacs_users Space used:         15 KB
 File Name:        edacs_version Space used:          2 KB</pre>
 
+Nagios Graph:
+
+Visualizing the tablespace can identify a trend in growth to determine the need for additional storage.
+
+![](images/check_tablespace_mysql-example1.png)
+
 #### Notes:
 
 The plugin's .java source code file needs to be compiled into Java bytecode before it can be used, i.e. by calling:  
