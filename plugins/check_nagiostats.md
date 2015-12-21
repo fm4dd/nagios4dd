@@ -1,16 +1,16 @@
 # check_nagiostats.pl
 
-## Man page for the Nagios plugin check_nagiostats.pl.pl
+## Man page for the Nagios plugin check_nagiostats.pl
 
 Update (c) 2010 Frank4DD<support[at]frank4dd.com>
 
-### check_nagiostats.pl.pl
+### check_nagiostats.pl
 
 * * *
 
-This plugin checks nagios performance data by parsing the nagios status.dat file, e.g. in /usr/local/nagios/var/status.dat.
+This plugin checks nagios performance data by parsing the nagios status.dat file, e.g. in /usr/local/nagios/var/status.dat. This is helpful to correlate the Nagios configuration size with the OS performance to identify upcoming hardware bottlenecks for Nagios.
 
-Because it depends on being able to read the status.dat file, it can only run locally on the Nagios server itself.
+Because it depends on being able to read the status.dat file, it runs locally on the Nagios server itself.
 
 #### Usage:
 
