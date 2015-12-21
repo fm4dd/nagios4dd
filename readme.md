@@ -1,7 +1,5 @@
 # nagios4dd
 
-* * *
-
 This repository contains Nagios-related software. Plugins and plugin enhancements, tools and notification scripts.
 
 ### Nagios flexible notification scripts
