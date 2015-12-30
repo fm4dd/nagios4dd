@@ -1,18 +1,14 @@
-# Nagios Plugin List
+## Nagios Plugin List
 
 Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### Introduction
-
-* * *
 
 This is a set of Nagios plugins I developed or modified for the enterprise monitoring environments. All are made available under the GPL license for free re-use and further improvements.
 
 The plugins have been tested to be working since Nagios version 3.x, and work with the latest Nagios versions under 4.x
 
 ### Operating System Monitoring Plugins
-
-* * *
 
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
@@ -27,8 +23,6 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 
 ### Network, Firewall and PBX Device Monitoring Plugins
 
-* * *
-
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
 | 9 | [check_snmp_patchlevel.pl](check_snmp_patchlevel.pl) | 1.2 | Checks the Cisco OS version against a compliance list | [manual](check_snmp_patchlevel.md) |
@@ -39,8 +33,6 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 | 14 | [check_asa_sessions.pl](check_asa_sessions.pl) | 0.2 | Checks All, or IpSec, SslVPN and WebVPN sessions in a Cisco ASA | [manual](check_asa_sessions.md) |
 
 ### Database Monitoring Plugins
-
-* * *
 
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
@@ -57,8 +49,6 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 
 ### Web Monitoring Plugins
 
-* * *
-
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
 | 25 | [check_apachestatus.pl](check_apachestatus.pl) | 1.6 | Checks the apache sessions through the mod_status module | [howto](http://nagios.fm4dd.com/howto/apache-session-monitoring-nagios.htm) |
@@ -66,8 +56,6 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 | 27 | [check_http_time.pl](check_http_time.pl) | 1.0 | Checks the remote web server time difference against Nagios server time | [manual](check_http_time.md) |
 
 ### Other Monitoring Plugins
-
-* * *
 
 | # | Name | Ver. | Description | Usage |
 |---|------|------|-------------|-------|
@@ -77,3 +65,7 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 | 31 | [check_tokyo_power.pl](check_tokyo_power.pl) | 1.0 | Checks Tokyo metropolitan electric power consumption published by Tepco | [howto](http://nagios.fm4dd.com/howto/nagios-monitoring-2011-tokyo-radiation.htm) |
 | 32 | [check_fail2ban.sh](check_fail2ban.sh) | 1.2 | Monitors the number of IP's blocked by fail2ban, and gives feedback on brute-force attacks | [manual](check_fail2ban.md) |
 | 33 | [check_nagiostats.pl](check_nagiostats.pl) | 1.0 | Checks Nagios plugin execution time, and host or service config totals. | [manual](check_nagiostats.md) |
+
+### Notes
+
+See also http://nagios.fm4dd.com/plugins/
