@@ -4,8 +4,6 @@ This repository contains Nagios-related software. Plugins and plugin enhancement
 
 ### Nagios flexible notification scripts
 
-* * *
-
 [notifications](notifications): Nagios Core only comes with a barebone structure for plaintext-based e-mail alerting. 
 These add-on scripts take the notification further by adding HTML formatting, color coding, language selections, and more.
 Integration with two popular graphing packages Nagiosgraph and PNP4Nagios adds problem visualization to the alerts.
@@ -19,13 +17,9 @@ Service Notification Example:<br>
 
 ### Nagios monitoring plugins
 
-* * *
-
 [plugins](plugins): A set of 30+ plugins that covers a variety of use cases, such as database monitoring and security related indicators.
 
 
 ### Nagios monitoring tools
-
-* * *
 
 [tools](tools): Here I am keeping tools for creation and management of Nagios monitoring configurations. 
