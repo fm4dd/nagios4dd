@@ -6,12 +6,15 @@ Integration with two popular graphing packages Nagiosgraph and PNP4Nagios adds p
 
 This shortens the time for problem identification, increases problem transparency, and decreases time-to-fix.
 
-Service Notification Example:<br>
+### Service Notification Example:
+
 ![Alt text](http://nagios.fm4dd.com/howto/images/notification-graph-en-service-crit1.png "Service Notification Example")
 
 ### Notes
 
-See also: http://nagios.fm4dd.com/howto/nagios-flexible-notifications.htm
+See also:
+
+http://nagios.fm4dd.com/howto/nagios-flexible-notifications.htm
 
 http://nagios.fm4dd.com/howto/manual/nagios_send_host_mail.htm
 
