@@ -6,19 +6,13 @@ Copyright (c) 2015 Frank4DD<support[at]frank4dd.com>
 
 ### check_asa_sessions.sh
 
-* * *
-
 This plugin checks the number of VPN sessions on Cisco ASA appliances (e.g. 5525). This can be used to monitor the VPN usage over time, and pro-actively manage VPN license and device load. Thanks to Cisco's detailled SNMP MIB, we can monitor separately for IPsec, SSL-VPN and clientless WebVPN sessions. The plugin has a switch to count data over a redundand, load-sharing VPN cluster.
 
 ### Usage:
 
-* * *
-
 `./check_asa_sessions.sh -H <hostname> -C <community> -T <type> -w <warning-value> -c <critical-value> [-u <cluster-IP>] | -h`
 
 ### Options:
-
-* * *
 
 -H, --hostname  
       Hostname (required)
@@ -46,8 +40,6 @@ This plugin checks the number of VPN sessions on Cisco ASA appliances (e.g. 5525
 
 ### Plugin Usage Example:
 
-* * *
-
 Commandline output:
 
 <pre class="code"># /srv/app/nagios/lib/check_asa_sessions.pl -H 192.168.10.31 -C NAGro -t sslvpn -w 40 -c 80
@@ -74,15 +66,11 @@ Nagios plugin service definition, e.g. security-services.cfg:
 
 ### Nagios Output:
 
-***
-
 Exemplary output for a VPN cluster, providing both SSL-VPN (Anyconnect) and clientless Web-VPN access.
 
 ![](images/check_asa_sessions-example1.png)
 
 ### NagiosGraph:
-
-***
 
 Visualizing the number of concurrent VPN sessions gives a good indication about remote user activity, and helps track VPN uage, sizing, Cisco ASA VPN hardware and license limits.
 
