@@ -6,8 +6,6 @@ Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_tablespace_db2
 
-* * *
-
 This plugin checks the tablespace size of a specific IBM DB2 database against WARN and CRIT thresholds. It returns the total tablespace size, current size, space utilisation in percent and the number of data files belonging to this tablespace. The plugin can be called in 'reporting' mode, returning the space values withouth checking against a threshold. This is helpful if the tablespace only needs to be graphed as a trend over time.
 
 It requires the database to be set up for accepting network connections and being reachable through that network port from Nagios. The plugin uses IBM's DB2 JDBC driver, this driver must be installed and found through the Java classpath on the server executing this plugin. [(JDBC installation example)](http://fm4dd.com/database/howto-install-IBMdb2-jdbc.htm)

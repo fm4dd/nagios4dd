@@ -6,8 +6,6 @@
 
 ### check_ldap_lockout
 
-* * *
-
 This plugin checks if a Windows domain user ID is locked out by querying the AD repository through LDAP. Many support teams cannot handle complex passwords even *with* writing them down. :-) As a result, batch jobs fail, application access is locked, or worse...
 
 #### Dependencies:

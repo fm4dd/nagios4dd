@@ -6,8 +6,6 @@ Update (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_snmp_time.pl
 
-* * *
-
 This plugin checks the remote servers time and compares it against the local time on the Nagios server. With Nagios being sync'ed to NTP, this can identify systems that have no NTP set up, or NTP is wrongly configured. This plugin is particalry helpful if SNMP is already used to monitor the system.
 
 The plugin depends on Perl's Net::SNMP package, i.e. perl-SNMP-5.3.0.1-25.34.1.

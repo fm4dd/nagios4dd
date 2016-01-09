@@ -6,8 +6,6 @@ Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_tablespace_mysql
 
-* * *
-
 This plugin checks the tablespace size of a specific MySQL Server database against WARN and CRIT thresholds. It returns the current tablespace size and the number of data files belonging to this database. The plugin can be called in 'reporting' mode, returning the space values withouth checking against a threshold. This is helpful if the tablespace only needs to be graphed as a trend over time.
 
 It requires the database to be set up for accepting network connections and being reachable through that network port from Nagios. The plugin uses the MySQL JDBC driver, this driver must be installed and found through the Java classpath on the server executing this plugin. [(JDBC installation example)](http://fm4dd.com/database/howto-install-MySQL-jdbc.htm)

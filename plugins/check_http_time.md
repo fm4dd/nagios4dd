@@ -6,8 +6,6 @@ Update (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_http_time.pl
 
-* * *
-
 This plugin checks the remote servers time and compares it against the local time on the Nagios server. With Nagios being sync'ed to NTP, this can identify systems that have no NTP set up, or NTP is wrongly configured. This plugin is particularly helpful if HTTP is the only way to reach the server due to firewall or network restrictions.
 
 The plugin depends on Perl's LWP package, i.e. perl-libwww-perl-5.830-2.2.i586

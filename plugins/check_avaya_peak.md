@@ -6,8 +6,6 @@ Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_avaya_peak.pl
 
-* * *
-
 Avaya S8xxx media servers provide call peak information through Avaya's SNMP agents g3-mib for data, voice, srv, media and overall call peak values. These are collected in hourly periods, so the published data is always refering to the last hour of operation. The peak values available seem to be the concurrent number of calls measured per second, and the total number of calls per hour. This plugin queries these last hours peak values and compares them against warning and critical thresholds. The values are returned from one of these rate groups:
 
 *   g3callratedata
@@ -22,13 +20,9 @@ This plugin requires SNMP access to the Avaya media server, which is configured 
 
 ### Usage:
 
-* * *
-
 `./check_avaya_peak.pl [-v] -H <host> -C <snmp_community> [-2] | (-l login -x passwd [-X pass -L <authp>,<privp>]) [-p <port>] -R <rate type> -P <peak type> -w <warn level> -c <crit level> [-t <timeout>] [-f] [-V]`
 
 ### Options:
-
-* * *
 
 -v, --verbose  
       print extra debugging information
@@ -79,8 +73,6 @@ This plugin requires SNMP access to the Avaya media server, which is configured 
 
 ### Plugin Definition Example:
 
-* * *
-
 Below is an example of the plugin definition in the Nagios command.cfg file.
 
 <pre># check_avaya_peak nagios plugin returns concurrency peak
@@ -96,8 +88,6 @@ define command{
 }</pre>
 
 ### Plugin Usage Example:
-
-* * *
 
 The plugin with its most basic use.
 

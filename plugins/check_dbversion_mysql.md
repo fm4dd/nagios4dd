@@ -6,8 +6,6 @@ Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_dbversion_mysql
 
-* * *
-
 This plugin tests the database software version through querying a specific MySQL database. It can either simply return the version string (discovery mode), or compare it against a blacklist/whitelist version file to determine software version compliance (compliance mode). Since it executes a real database login, it can also be used to determine database up|down.
 
 It requires the database to be set up for accepting network connections and being reachable through that network port from Nagios. The plugin uses the MySQL JDBC driver, this driver must be installed and found through the Java classpath on the server executing this plugin. [(JDBC installation example)](http://fm4dd.com/database/howto-install-MySQL-jdbc.htm)

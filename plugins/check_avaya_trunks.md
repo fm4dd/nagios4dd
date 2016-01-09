@@ -6,8 +6,6 @@ Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_avaya_trunks.pl
 
-* * *
-
 This plugin checks the call usage of PBX trunks on AVAYA VOIP S8xxx media servers, accessing Avaya's SNMP agent running with [G3-AVAYA-MIB Version 5.1.1](avaya/g3mib.asn1). It returns the current number of active trunk lines compared to the total number of lines. They are checked against warning and critical threshold values to identify capacity issues. The data can be graphed for historical trending.  
 Nagios checks are typically run in 5 minute intervals. Much could happen in between checks, fo example when a lot of short calls are being made. AVAYA's SNMP data provides a different data set with absolute call peaks across all trunks, check_avaya_peaks is the plugin to monitor these.
 
@@ -15,13 +13,9 @@ This plugin requires SNMP access to the Avaya media server, which is configured 
 
 ### Usage:
 
-* * *
-
 `./check_avaya_trunk.pl [-v] -H <host> -C <snmp_community> [-2] | (-l login -x passwd [-X pass -L <authp>,<privp>]) [-p <port>] -T <trunkgroup number> -w <warn level> -c <crit level> [-t <timeout>] [-V]`
 
 ### Options:
-
-* * *
 
 -v, --verbose  
       print extra debugging information
@@ -69,8 +63,6 @@ This plugin requires SNMP access to the Avaya media server, which is configured 
 
 ### Plugin Definition Example:
 
-* * *
-
 Below is an example of the plugin definition in the Nagios command.cfg file.
 
 <pre># check_avaya_trunk nagios plugin
@@ -80,8 +72,6 @@ define command{
 }</pre>
 
 ### Plugin Usage Example:
-
-* * *
 
 The plugin with its most basic use.
 

@@ -6,21 +6,15 @@ Updated (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_avaya_error.pl
 
-* * *
-
 This plugin checks the error logs of AVAYA S8xxx media servers through Avaya's SNMP agent with [G3-AVAYA-MIB Version 5.1.1](avaya/g3mib.asn1). It returns the port, date, time and alert names that have been recorded for server and communication manager logs.
 
 It requires SNMP access to the Avaya media server, which is configured in the management console. The plugin depends on Perl's Net::SNMP package, i.e. perl-SNMP-5.3.0.1-25.34.1.
 
 ### Usage:
 
-* * *
-
 `./check_avaya_error.pl [-v] -H <host> -C <snmp_community> [-2] | (-l login -x passwd [-X pass -L <authp>,<privp>]) [-p <port>] -S <SVL|CML> -E <errorlevel> [-t <timeout>] [-V]`
 
 ### Options:
-
-* * *
 
 -v, --verbose  
       print extra debugging information
@@ -65,8 +59,6 @@ It requires SNMP access to the Avaya media server, which is configured in the ma
 
 ### Plugin Definition Example:
 
-* * *
-
 Below is an example of the plugin definition in the Nagios command.cfg file.
 
     # check_avaya_error.pl nagios plugin
@@ -76,8 +68,6 @@ Below is an example of the plugin definition in the Nagios command.cfg file.
     }
 
 ### Plugin Usage Example:
-
-* * *
 
 The plugin with its most basic use, checking for critical alerts.
 

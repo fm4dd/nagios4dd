@@ -6,8 +6,6 @@ Copyright (c) 2015 Frank4DD<support[at]frank4dd.com>
 
 ### check_ubuntu_update.pl
 
-* * *
-
 This plugin checks the patch update status for Ubuntu servers. This alerts when new patches become available from Ubuntu to ensure a timely OS patching, which is especially important for security-related updates.
 
 The plugin depends on the built-in 'apt-get' tool for retrieving update information.
@@ -58,7 +56,5 @@ WARNING - 6 new pkgs in updates: libgnutls-openssl27 libpng12-0 libpng12-dev lib
 ![](images/check_ubuntu_update-example1.png)
 
 ### Notes:
-
-* * *
 
 Various ways exist to run this script on networked servers. My prefered method is to use Linux SNMP extend for remote script execution, as SNMP is typically already used to get Linux load, memory, disk, or network performance data.

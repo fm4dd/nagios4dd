@@ -6,8 +6,6 @@ Update (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_snmp_aixload.pl
 
-* * *
-
 This plugin checks the CPU load on AIX systems through the AIX MIB value "aixSeCPUUtilization". This plugin is particulary helpful if SNMP is already used to monitor the system.
 
 We used to monitor AIX load through check_snmp_load.pl, using the parameter -T stand (type standard). This worked fine retrieving the number of CPU cores and the 1 minute load average from the Host mibs values under "hrProcessorLoad". When IBM released thew AIX OS update OS update to TL11 SP4 and we upgraded, our CPU monitoring broke and phantastic load values were returned by IBM's AIX SNMP daemon.

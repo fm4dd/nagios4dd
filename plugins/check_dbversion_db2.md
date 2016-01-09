@@ -6,23 +6,17 @@ Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_dbversion_db2
 
-* * *
-
 This plugin tests the database software version through querying a specific IBM DB2 database. It can either simply return the version string (discovery mode), or compare it against a blacklist/whitelist version file to determine software version compliance (compliance mode). Since it executes a real database login, it can also be used to determine database up|down.
 
 It requires the database to be set up for accepting network connections and being reachable through that network port from Nagios. The plugin uses IBM's DB2 JDBC driver, this driver must be installed and found through the Java classpath on the server executing this plugin. [(JDBC installation example)](http://fm4dd.com/database/howto-install-IBMdb2-jdbc.htm)
 
 ### Usage:
 
-* * *
-
 `java -classpath <path to check_dbversion_db2.class> check_dbversion_db2 <db-ip> <db-port> <db-instance> <db-user> <db-pwd> [-d]`
 
 `java -classpath <path to check_dbversion_db2.class> check_tablespace_db2 <db-ip> <db-port> <db-instance> <db-user> <db-pwd> -f configfile`
 
 ### Options:
-
-* * *
 
 [db-ip]  
       The IP address of the database server
@@ -59,8 +53,6 @@ The blacklist/whitelist file for comparing database versions against consists of
 
 ### Configuration File Example:
 
-* * *
-
 When used with '-f configfile', the configuration file could contain these lines:
 
     ######################################################################
@@ -96,8 +88,6 @@ When used with '-f configfile', the configuration file could contain these lines
 
 ### Plugin Usage Example:
 
-* * *
-
 The plugin in 'discovery' mode, returns OK if the software version string could be fetched.
 
 <pre>susie: ~ # java -classpath /srv/app/nagios/libexec/ check_dbversion_db2 192.168.1.64 50000 DB2 db2admin "p@ssw0rd"
@@ -111,8 +101,6 @@ Version WARN: DB2 v9.5.0.3 build s081210 vulnerable (low-medium)|Needs 9.5.0.5 (
  Date 14 Dec 2009, vulnerabilities listed here: http://www-01.ibm.com/support/docview.wss?rs=71&uid=swg21412902</pre>
 
 ### Notes:
-
-* * *
 
 The plugin's .java source code file needs to be compiled into Java bytecode before it can be used, i.e. by calling:  
 _javac check_dbversion_db2.java_.

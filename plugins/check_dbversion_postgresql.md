@@ -6,8 +6,6 @@ Copyright (c) 2014 Frank4DD<support[at]frank4dd.com>
 
 ### check_dbversion_postgresql
 
-* * *
-
 **Note: This plugin is not widely tested. Please consider feedback to improve it, or to confirm its OK. Thank You!**
 
 This plugin tests the database software version through querying a specific PostgreSQL database. It can either simply return the version string (discovery mode), or compare it against a blacklist/whitelist version file to determine software version compliance (compliance mode). Since it executes a real database login, it can also be used to determine database up|down.

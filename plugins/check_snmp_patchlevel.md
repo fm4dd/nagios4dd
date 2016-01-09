@@ -6,8 +6,6 @@ Copyright (c) 2010 Frank4DD<support[at]frank4dd.com>
 
 ### check_snmp_patchlevel.pl
 
-* * *
-
 This plugin tests the OS software version through querying the SNMP sysDescr value (SNMPv2-MIB::sysDescr.0, OID .1.3.6.1.2.1.1.1.0). Although this value is very differently set by IT vendors, we can use it to determine and monitor Cisco network devices. Cisco thankfully provides a consistent format we can parse for compliance checks. Currently implemented are Cisco IOS devices, as well as PIX (obsolete by now) and ASA firewalls. The plugin can either simply return the version string (discovery mode), or compare it against a blacklist/whitelist version file to determine software version compliance (compliance mode).
 
 The plugin depends on Perl's Net::SNMP package, i.e. perl-SNMP-5.3.0.1-25.34.1.
@@ -101,13 +99,9 @@ Compiled Fri 01-Dec-06 18:02 by weiliu</pre>
 
 ### Nagios Output:
 
-* * *
-
 ![](images/check_snmp_patchlevel-example1.png)
 
 ### Notes:
-
-* * *
 
 See also the how-to at 
 [http://nagios.fm4dd.com/howto/cisco-patch-update-monitoring.htm](http://nagios.fm4dd.com/howto/cisco-patch-update-monitoring.htm)
