@@ -53,6 +53,10 @@ If there are updates, the plugin returns warning and displays the package names,
 <pre>susie: ~ # ./check_ubuntu_update.pl
 WARNING - 6 new pkgs in updates: libgnutls-openssl27 libpng12-0 libpng12-dev libnss3-nssdb libgnutls26 libnss3...</pre>
 
+#### Plugin Notification Example:
+
+![](images/check_ubuntu_update-example1.png)
+
 ### Notes:
 
 * * *
