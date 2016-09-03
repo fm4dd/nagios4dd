@@ -45,7 +45,7 @@ The plugins have been tested to be working since Nagios version 3.x, and work wi
 | 21 | [check_tablespace_db2.java](check_tablespace_db2.java) | 1.0 | Checks DB2 tablespace sizes against warn and crit thresholds | [manual](check_tablespace_db2.md) |
 | 22 | [check_tablespace_mssql.java](check_tablespace_mssql.java) | 1.0 | Checks SQL Server tablespace sizes against warn and crit thresholds | [manual](check_tablespace_mssql.md) |
 | 23 | [check_tablespace_oracle.java](check_tablespace_oracle.java) | 1.0 | Checks Oracle tablespace sizes against warn and crit thresholds | [manual](check_tablespace_oracle.md) |
-| 24 | [check_tablespace_mysql.java](check_tablespace_mysql.java) | 1.0 | Checks MySQL tablespace sizes against warn and crit thresholds | [manual](check_tablespace_mysql.md) |
+| 24 | [check_tablespace_mysql.java](check_tablespace_mysql.java) | 1.2 | Checks MySQL tablespace sizes against warn and crit thresholds | [manual](check_tablespace_mysql.md) |
 
 ### Web Monitoring Plugins
 
