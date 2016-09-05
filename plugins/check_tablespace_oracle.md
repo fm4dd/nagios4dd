@@ -41,7 +41,7 @@ It requires the database to be set up for accepting network connections and bein
 -r [tablespace]  
       Reporting tablespace size, always returns OK
 
-[tablespace] [warn> [crit]  
+[tablespace] [warn] [crit]  
       Set tablespace name and alert thresholds for WARN and CRIT in bytes
 
 #### Plugin Usage Example:
