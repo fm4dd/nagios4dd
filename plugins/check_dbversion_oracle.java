@@ -1,18 +1,19 @@
 // ----------------------------------------------------------------------------
-// check_dbversion_oracle.java 20100719 frank4dd version 1.0
+// check_dbversion_mssql.java 20100209 frank4dd version 1.0
 // ----------------------------------------------------------------------------
 // e-mail: support[at]frank4dd.com
 // web:    http://nagios.fm4dd.com/
 //
-// This nagios plugin logs in and queries the 'PRODUCT_COMPONENT_VERSION' table.
-// Supported and tested are Oracle versions 10g, other versions should work also.
+// This nagios plugin queries the MS-SQL builtin SERVERPROPERTY objects.
+// The objects 'productversion', 'productlevel' and 'edition' are returned.
+// Supported are MS-SQL server versions 2005, other versions may work also.
 //
-// Pre-requisites: Oracle JDBC driver installed and DB user has select rights.
-// jdbc driver file i.e. ojdbc5.jar
+// Pre-requisites: MSSQL JDBC driver installed and DB user has select rights.
+// jdbc driver files i.e. sqljdbc.jar, sql4jdbc.jar
 // ----------------------------------------------------------------------------
 // Example Output:
-// > java check_dbversion_oracle 192.168.98.151 1521 ORADB orausr pass1234
-// Version WARN: Oracle v10.2.0.3.0 vulnerable (low-medium)|
+// > java check_dbversion_mssql 192.168.98.128 1433 mydb dbuser "password"
+// Version OK: Microsoft SQL Server v9.00.3054.00 SP2, Standard Edition|
 // ----------------------------------------------------------------------------
 // return codes 'OK'=>0,'WARNING'=>1,'CRITICAL'=>2,'UNKNOWN'=>3,'DEPENDENT'=>4
 // ----------------------------------------------------------------------------
@@ -20,7 +21,7 @@ import java.sql.*;
 import java.io.*;
 import java.util.*;
 
-class check_dbversion_oracle {
+class check_dbversion_mssql {
 
   static int debug       = 0;  // 'normal'=>0,'verbose'=>1 when -d parameter is given
   static String db_name = "";  // varchar(128)
@@ -39,8 +40,8 @@ class check_dbversion_oracle {
   public static void main (String args[]) {
     if (args.length < 5) {
       System.err.println("Error: Missing Arguments.");
-      System.err.println("Usage: java check_dbversion_oracle <db-ip> <db-port> <db-instance> <db-user> <db-pwd> [-d]");
-      System.err.println("Usage: java check_dbversion_oracle <db-ip> <db-port> <db-instance> <db-user> <db-pwd> -f configfile");
+      System.err.println("Usage: java check_dbversion_mssql <db-ip> <db-port> <db-instance> <db-user> <db-pwd> [-d]");
+      System.err.println("Usage: java check_dbversion_mssql <db-ip> <db-port> <db-instance> <db-user> <db-pwd> -f configfile");
       System.exit(-1);
     }
     // Check if we got -d for debug
@@ -50,7 +51,7 @@ class check_dbversion_oracle {
     if (args.length == 7 && args[5].equals("-f")) { 
       cfgfile=args[6];
       try {
-         // Open the configuration file
+         // Open the file
          FileInputStream fstream = new FileInputStream(cfgfile);
          // Convert our input stream to a DataInputStream
          BufferedReader in = new BufferedReader(new InputStreamReader(fstream));
@@ -60,8 +61,8 @@ class check_dbversion_oracle {
          while (in.ready()) {
            String line = in.readLine(); 
            line = line.trim();
-           // load config data while ignoring comment lines starting with #
            if (! line.startsWith("#")) { 
+             // load config data and ignore comments
              cfgdata[counter] = line;
              counter++;
           }
@@ -72,25 +73,24 @@ class check_dbversion_oracle {
       catch (Exception e) { System.err.println("File input error"); }
     }
 
-    dbUrl = "jdbc:oracle:thin:" + args[3] + "/" + args[4] + "@" + args[0] +":" + args[1] +":" + args[2];
 
-
+    dbUrl = "jdbc:sqlserver://" + args[0] +":" + args[1] +";databaseName=" + args[2] + ";user=" + args[3] + ";password=" + args[4] + ";";
     if (debug == 1) { System.out.println("DB connect: " + dbUrl); }
 
     try {
-      // use the JDBC driver
-      Class.forName("oracle.jdbc.driver.OracleDriver");
+      // use the JDBCtype 4 driver
+      Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
     } catch (ClassNotFoundException e) {
       System.err.println("Error: JDBC Driver Problem.");
       System.err.println (e);
       System.exit (3);
     }
     try {
-      // open connection to database "jdbc:oracle:thin:@destinationhost:port:dbname", "dbuser", "dbpassword"
+      // open connection to database "jdbc:sqlserver://destinationhost:port/dbname;user=dbuser;password=dbpassword;"
       Connection connection = DriverManager.getConnection(dbUrl);
 
       // build query
-      query = "SELECT PRODUCT, VERSION FROM PRODUCT_COMPONENT_VERSION WHERE PRODUCT like '%Database%'";
+      query = "SELECT  convert(varchar(128), SERVERPROPERTY('ServerName')), convert(varchar(128), SERVERPROPERTY('productversion')), convert(varchar(128),SERVERPROPERTY ('productlevel')), convert(varchar(128), SERVERPROPERTY ('edition'))";
       if (debug == 1) { System.out.println ("DB query: " + query); }
 
       // execute query
@@ -102,13 +102,17 @@ class check_dbversion_oracle {
       prdname = dbmd.getDatabaseProductName();
 
       while ( rs.next () ) {
-        // get values from column "2"
-        { db_name = rs.getString(1); }
-        { release = rs.getString(2); }
-      }
-      if (debug == 1) { 
-        System.out.format ("Server Name: %20s|Product: %10s|Version: %10s\n",
-        db_name, release);
+        if (debug == 1) { 
+          System.out.format ("Server Name: %20s|",     rs.getString(1)); // varchar(128) i.e. DB2
+          System.out.format ("Product Version: %10s|", rs.getString(2)); // varchar(128) i.e. 06050107
+          System.out.format ("Product Level: %10s|",   rs.getString(3)); // varchar(128) i.e. DB2 v9.5.400.576
+          System.out.format ("Edition: %10s\n",        rs.getString(4)); // varchar(128) i.e. s090429
+        }
+        // get content from column "1-4"
+        db_name = rs.getString(1);
+        release = rs.getString(2);
+        s_level = rs.getString(3);
+        b_level = rs.getString(4);
       }
 
       rs.close () ;
@@ -117,20 +121,20 @@ class check_dbversion_oracle {
 
     } catch (java.sql.SQLException e) {
       System.err.println (e) ;
-      System.exit (3) ; // return UNKNOWN
+      System.exit (3) ; // Unknown
     }
 
-    version =  prdname + " v" + release;
-    perfdata = db_name + " v" + release;
+    version =  prdname + " v" + release + " " + s_level;
+    output = version + ", " + b_level;
 
     // If we have no config file, we are in reporting mode
     if ( cfgfile.equals("") ) {
-      System.out.println("Version OK: " + version + "|" + perfdata);
-      System.exit (0); // return OK
+      System.out.println("Version OK: " + output + "|" + perfdata);
+      System.exit (0); // OK
     } else {
-    // -------------------------------------------------------------------------------
-    // We are in 'compliance' mode, we check the DB Version against the config file
-    // -------------------------------------------------------------------------------
+    //################################################################################
+    //# We are in 'compliance' mode, we check the DB Version against the config file
+    //################################################################################
       int counter=0;
       String required = "";
       String  dbgroup = "";
@@ -143,34 +147,34 @@ class check_dbversion_oracle {
       if (st.hasMoreTokens()) { dbversion  = st.nextToken(); }
       if (st.hasMoreTokens()) { remarks    = st.nextToken(); }
 
-        if( dbgroup.equals("oracle") && dbversion.equals(version) && required.equals("approved")) {
+        if( dbgroup.equals("mssql") && dbversion.equals(version) && required.equals("approved")) {
           if(! remarks.equals("")) { perfdata = remarks; }
           System.out.println("Version OK: " + version + "|" + perfdata);
-          System.exit (0); // return OK
+          System.exit (0); // OK
         }
 
-        if( dbgroup.equals("oracle") && dbversion.equals(version) && required.equals("obsolete")) {
+        if( dbgroup.equals("mssql") && dbversion.equals(version) && required.equals("obsolete")) {
           if(! remarks.equals("")) { perfdata = remarks; }
           System.out.println("Version WARN: " + version + " obsolete"  + "|" + perfdata);
-          System.exit (1); // return WARN
+          System.exit (1); // WARN
         }
 
-        if( dbgroup.equals("oracle") && dbversion.equals(version) && required.equals("med-vuln")) {
+        if( dbgroup.equals("mssql") && dbversion.equals(version) && required.equals("med-vuln")) {
           if(! remarks.equals("")) { perfdata = remarks; }
           System.out.println("Version WARN: " + version + " vulnerable (low-medium)"  + "|" + perfdata);
-          System.exit (1); // return WARN
+          System.exit (1); // WARN
         }
 
-        if( dbgroup.equals("oracle") && dbversion.equals(version) && required.equals("crit-vuln")) {
+        if( dbgroup.equals("mssql") && dbversion.equals(version) && required.equals("crit-vuln")) {
           if(! remarks.equals("")) { perfdata = remarks; }
           System.out.println("Version CRITICAL: " + version + " vulnerable (high risk)"  + "|" + perfdata);
-          System.exit (2); // return CRITICAL
+          System.exit (2); // CRITICAL
         }
         counter++;
       }
     //  the OS version is not listed, we don't know exactly if its good or bad.
     System.out.println("Version UNKNOWN: "+version+ " unverified" + "|" + perfdata);
-    System.exit (3); // return UNKNOWN;
+    System.exit (3); // UNKNOWN;
     }
   }
 }

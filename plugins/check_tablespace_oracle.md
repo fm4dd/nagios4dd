@@ -16,7 +16,7 @@ It requires the database to be set up for accepting network connections and bein
 
 `java -classpath <path to check_tablespace_oracle.class> check_tablespace_oracle <db-ip> <db-port> <db-instance> <db-user> <db-pwd> -r <tablespace-name>`  
 
-`java -classpath <path to check_tablespace_oracle.class> check_tablespace_oracle <db-ip> <db-port> <db-instance> <db-user> <db-pwd> <tablespace-name> <KB-warn> <KB-crit>`
+`java -classpath <path to check_tablespace_oracle.class> check_tablespace_oracle <db-ip> <db-port> <db-instance> <db-user> <db-pwd> <tablespace-name> <warn> <crit>`
 
 #### Options:
 
@@ -41,27 +41,27 @@ It requires the database to be set up for accepting network connections and bein
 -r [tablespace]  
       Reporting tablespace size, always returns OK
 
-[tablespace] [KB-warn> [KB-crit]  
-      Set tablespace name and alert thresholds for WARN and CRIT in Kbytes
+[tablespace] [warn> [crit]  
+      Set tablespace name and alert thresholds for WARN and CRIT in bytes
 
 #### Plugin Usage Example:
 
 The plugin in 'reporting' mode, returns OK if the tablespace size could be fetched.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle 192.168.98.151 1521  ORADB system "p@ssw0rd" -r
- G02IND01
-Tablespace OK: G02IND01 20% used|G02IND01: 3 datafiles, used 5120 KB of 9216 KB total</pre>
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle localhost 1521 ORCL system test
+ -r SYSTEM
+OK - SYSTEM 100% used (790.00 MB/790.50 MB)|bytes_used=828375040;; percent_used=100;; datafiles=1</pre>
 
 The plugin in 'check' mode, returns the status depending on the tablespace size exceeding the WARN and CRIT threshold values.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle 192.168.98.151 1521  ORADB system "p@ssw0rd"
- G02IND01 5120 5121
-Tablespace WARN: G02IND01 20% used|G02IND01: 3 datafiles, used 5120 KB of 9216 KB total</pre>
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle localhost 1521 ORCL system test
+ SYSTEM 500000000 900000000
+WARN - SYSTEM 100% used (790.00 MB/790.50 MB)|bytes_used=828375040;; percent_used=100;; datafiles=1</pre>
 
 The plugin in 'debug' mode, listing all tablespaces configured for this database.
 
-<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle 192.168.1.151 1521  ORADB system "p@ssw0rd" -d
-DB connect: jdbc:oracle:thin:system/p@ssw0rd@1192.168.1.151:1521:ORADB
+<pre># java -classpath /srv/app/nagios/libexec/ check_tablespace_oracle localhost 1521 ORCL system test -d
+DB connect: jdbc:oracle:thin:system/test@localhost:1521:ORCL
 DB query: select  df.TABLESPACE_NAME, df.FILE_ID, ((df.BYTES+fs.BYTES)/1024)
  kbytes_max, (df.BYTES/1024) kbytes_used, round(((df.BYTES - fs.BYTES) /
  df.BYTES) * 100) usage_pct from ( select  TABLESPACE_NAME, sum(BYTES) 
@@ -69,16 +69,10 @@ BYTES, count(distinct FILE_ID) FILE_ID from dba_data_files group by
 TABLESPACE_NAME ) df, ( select TABLESPACE_NAME, sum(BYTES) BYTES from 
 dba_free_space group by TABLESPACE_NAME) fs where df.TABLESPACE_NAME=
 fs.TABLESPACE_NAME order by df.TABLESPACE_NAME asc
-Name:             G02IND01 Files:  3 Space total:       9216 KB Space used:       5120 KB Space % used:  20 %
-Name:             G02IND02 Files:  3 Space total:       9280 KB Space used:       5120 KB Space % used:  19 %
-Name:             G02IND03 Files:  3 Space total:       9280 KB Space used:       5120 KB Space % used:  19 %
-Name:             G02IND04 Files:  3 Space total:       9280 KB Space used:       5120 KB Space % used:  19 %
-Name:             G02IND05 Files:  3 Space total:       9216 KB Space used:       5120 KB Space % used:  20 %
-Name:             G02IND06 Files:  3 Space total:       9216 KB Space used:       5120 KB Space % used:  20 %
-Name:             G02IND07 Files:  3 Space total:       9216 KB Space used:       5120 KB Space % used:  20 %
-Name:             G02IND08 Files:  3 Space total:       9088 KB Space used:       5120 KB Space % used:  23 %
-Name:             G02IND09 Files:  2 Space total:      39552 KB Space used:      20480 KB Space % used:   7 %
-Name:             G02TAB01 Files:  1 Space total:       8960 KB Space used:       5120 KB Space % used:  25 %</pre>
+Name: SYSAUX               Files: 1, Space total:  706.62 MB, Space used:  670.00 MB, % used:  95 %
+Name: SYSTEM               Files: 1, Space total:  790.50 MB, Space used:  790.00 MB, % used: 100 %
+Name: UNDOTBS1             Files: 1, Space total:  215.56 MB, Space used:  215.00 MB, % used: 100 %
+Name: USERS                Files: 1, Space total:    8.62 MB, Space used:    5.00 MB, % used:  28 %</pre>
 
 #### Notes:
 
