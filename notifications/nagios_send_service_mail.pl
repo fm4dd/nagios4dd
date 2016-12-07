@@ -186,34 +186,52 @@ my %language = ('en' => { 'A' => 'Customer',
 
 ####### Global Variables - No changes necessary below this line ##########
 my $o_hostfunction     = $ENV{NAGIOS__HOSTSERVERFUNCTION};
+   $o_hostfunction     = $ENV{ICINGA__HOSTSERVERFUNCTION} if($ENV{ICINGA__HOSTSERVERFUNCTION});
 # Nagios notification type, i.e. PROBLEM
 my $o_notificationtype = $ENV{NAGIOS_NOTIFICATIONTYPE};
+   $o_notificationtype = $ENV{ICINGA_NOTIFICATIONTYPE}    if($ENV{ICINGA_NOTIFICATIONTYPE});
 # Nagios notification author (if avail.)
 my $o_notificationauth = $ENV{NAGIOS_NOTIFICATIONAUTHOR};
+   $o_notificationauth = $ENV{ICINGA_NOTIFICATIONAUTHOR}  if($ENV{ICINGA_NOTIFICATIONAUTHOR});
 # Nagios notification comment (if avail.)
 my $o_notificationcmt  = $ENV{NAGIOS_NOTIFICATIONCOMMENT};
+   $o_notificationcmt  = $ENV{ICINGA_NOTIFICATIONCOMMENT} if($ENV{ICINGA_NOTIFICATIONCOMMENT});
 # Nagios service description
 my $o_servicedesc      = $ENV{NAGIOS_SERVICEDESC};
+   $o_servicedesc      = $ENV{ICINGA_SERVICEDESC}         if($ENV{ICINGA_SERVICEDESC});
 # Nagios service state
 my $o_servicestate     = $ENV{NAGIOS_SERVICESTATE};
+   $o_servicestate     = $ENV{ICINGA_SERVICESTATE}        if($ENV{ICINGA_SERVICESTATE});
 # Nagios service group the service belongs to
 my $o_servicegroup     = $ENV{NAGIOS_SERVICEGROUPNAME};
+   $o_servicegroup     = $ENV{ICINGA_SERVICEGROUPNAME}    if($ENV{ICINGA_SERVICEGROUPNAME});
 # Nagios monitored host name
 my $o_hostname         = $ENV{NAGIOS_HOSTNAME};
+   $o_hostname         = $ENV{ICINGA_HOSTNAME}            if($ENV{ICINGA_HOSTNAME});
 # Nagios monitored host alias
 my $o_hostalias        = $ENV{NAGIOS_HOSTALIAS};
+   $o_hostalias        = $ENV{ICINGA_HOSTALIAS}           if($ENV{ICINGA_HOSTALIAS});
 # Nagios host group the host belongs to
 my $o_hostgroup        = $ENV{NAGIOS_HOSTGROUPNAME};
+   $o_hostgroup        = $ENV{ICINGA_HOSTGROUPNAME}       if($ENV{ICINGA_HOSTGROUPNAME});
 # Nagios monitored host IP address
 my $o_hostaddress      = $ENV{NAGIOS_HOSTADDRESS};
+   $o_hostaddress      = $ENV{ICINGA_HOSTADDRESS}         if($ENV{ICINGA_HOSTADDRESS});
 # Nagios service check output data
 my $o_serviceoutput    = $ENV{NAGIOS_SERVICEOUTPUT};
+   $o_serviceoutput    = $ENV{ICINGA_SERVICEOUTPUT}       if($ENV{ICINGA_SERVICEOUTPUT});
+# Nagios service check long output data
+my $o_longserviceoutput = $ENV{NAGIOS_LONGSERVICEOUTPUT};
+   $o_longserviceoutput = $ENV{ICINGA_LONGSERVICEOUTPUT}  if($ENV{ICINGA_LONGSERVICEOUTPUT});
 # Nagios date when the event was recorded
 my $o_datetime         = $ENV{NAGIOS_LONGDATETIME};
+   $o_datetime         = $ENV{ICINGA_LONGDATETIME}        if($ENV{ICINGA_LONGDATETIME});
 # The recipients defined in $CONTACTEMAIL$
 my $o_to_recipients    = $ENV{NAGIOS_CONTACTEMAIL};
+   $o_to_recipients    = $ENV{ICINGA_CONTACTEMAIL}        if($ENV{ICINGA_CONTACTEMAIL});
 # Modified by Robert Becht for using $CONTACTGROUPEMEMBERS$ in nagios.conf
 my $recipient_group    = $ENV{NAGIOS_CONTACTGROUPMEMBERS};
+   $recipient_group    = $ENV{ICINGA_CONTACTGROUPMEMBERS} if($ENV{ICINGA_CONTACTGROUPMEMBERS});
 
 # The next variables are provided through args
 my $o_to_group         = undef; # this flag is only set with the -g option
