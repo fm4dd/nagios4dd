@@ -626,6 +626,7 @@ sub b64encode_img {
 sub import_pnp_graph {
   use LWP;
   use FileHandle;
+  use Net::SSL;
   $tstamp = time();
 
   # This sets the graph history
@@ -638,7 +639,7 @@ sub import_pnp_graph {
   $tmpfile = $fhandle->filename;
 
   # Download the image
-  my $ua = LWP::UserAgent->new( );
+  my $ua = LWP::UserAgent->new(ssl_opts => { verify_hostname => 0}, );
 
   # Check if web authentication is required
   if (defined($pnp4nagios_auth)) {
