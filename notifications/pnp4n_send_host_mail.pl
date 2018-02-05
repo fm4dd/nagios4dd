@@ -30,6 +30,7 @@
 # Depends : perl-Mail-Sendmail (Mail::Sendmail)                         #
 #           perl-MIME-tools (MIME::Base64)                              #
 #           perl-libwww-perl-6.03-2.1.2.noarch (LWP)                    #
+#           perl-LWP-Protocol-https (https support for LWP)             #
 #           libnetpbm (conversion png-to-jpg)                           #
 #           netpbm (see above)                                          #
 # ##################################################################### #
