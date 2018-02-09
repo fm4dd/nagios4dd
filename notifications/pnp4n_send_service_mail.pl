@@ -698,7 +698,7 @@ sub import_pnp_graph {
 
   # Download the image
   my $ua = LWP::UserAgent->new(ssl_opts => { verify_hostname => 0,
-                                             SSL_verify_mode => IO::Socket::SSL::SSL_VERIFY_NONE,}, );
+                                             SSL_verify_mode => SSL_VERIFY_NONE } );
 
   # Check if web authentication is required
   if (defined($pnp4nagios_auth)) {
