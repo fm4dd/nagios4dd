@@ -64,7 +64,7 @@ my $o_uri=             "/server-status"; # Default Apache URI
 sub show_versioninfo { print "$Name version : $Version\n"; }
 
 sub print_usage {
-   print "Usage: $Name -H <host> [-p <port>] [-u <uri>] [-x <proxyurl>] [-s] [-t <timeout>] [-w <warn_level> -c <crit_level>] [-V]\n";
+  print "Usage: $Name -H <host> [-p <port>] [-u <uri>] [-x <proxyurl>] [-s] [-t <timeout>] [-w <warn_level> -c <crit_level>] [-V]\n";
 }
 
 # Get the alarm signal
