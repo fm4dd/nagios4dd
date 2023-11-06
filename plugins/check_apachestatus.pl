@@ -1,10 +1,14 @@
 #!/usr/bin/perl -w
 ############### check_apachestatus.pl #######################
-# Version: 1.6
-# Date:    14 May 2009 Frank4DD http://nagios.fm4dd.com/
+# Version: 1.7
+# Date:    22 April 2016 Frank4DD http://nagios.fm4dd.com/
 # Author:  De Bodt Lieven (Lieven.DeBodt at gmail.com)
 # Licence: GPL - http://www.fsf.org/licenses/gpl.txt
 #############################################################
+# 20160422 <contact at christian-lauf dot info> v1.7
+#         Add parameter -u/--uri= to specify location of server-status handler
+#         For system where this was changed purposely
+#
 # 20090514 <public at frank4dd dot com> v1.6
 #          Add support for URL access through a web proxy
 #          and the https (SSL) connection method.
@@ -40,7 +44,7 @@ my %ERRORS=('OK'=>0,'WARNING'=>1,'CRITICAL'=>2,'UNKNOWN'=>3,'DEPENDENT'=>4);
 
 # Globals
 
-my $Version='1.6';
+my $Version='1.7';
 my $Name=$0;
 
 my $o_host =		undef; 		# hostname 
@@ -53,13 +57,14 @@ my $o_version= 		undef;  	# print version
 my $o_warn_level=	undef;  	# Number of available slots that will cause a warning
 my $o_crit_level=	undef;  	# Number of available slots that will cause an error
 my $o_timeout=  	15;            	# Default 15s Timeout
+my $o_uri=             "/server-status"; # Default Apache URI
 
 # functions
 
 sub show_versioninfo { print "$Name version : $Version\n"; }
 
 sub print_usage {
-  print "Usage: $Name -H <host> [-p <port>] [-x <proxyurl>] [-s] [-t <timeout>] [-w <warn_level> -c <crit_level>] [-V]\n";
+   print "Usage: $Name -H <host> [-p <port>] [-u <uri>] [-x <proxyurl>] [-s] [-t <timeout>] [-w <warn_level> -c <crit_level>] [-V]\n";
 }
 
 # Get the alarm signal
@@ -79,6 +84,8 @@ sub help {
    name or IP address of host to check
 -p, --port=PORT
    Http port
+-u, --uri=/STATUS-URI
+   URI to the Serverstatus page, if changed from Apache default
 -x, --proxyurl=http://proxy:port/
    URL of a proxy server, including protocol and port
 -s, --https
@@ -129,6 +136,7 @@ sub check_options {
       'h'     => \$o_help,        'help'          => \$o_help,
       'H:s'   => \$o_host,        'hostname:s'	  => \$o_host,
       'p:i'   => \$o_port,        'port:i'	  => \$o_port,
+      'u:s'   => \$o_uri,         'uri:s'         => \$o_uri,
       'x:s'   => \$o_proxyurl,    'proxyurl:s'	  => \$o_proxyurl,
       's'     => \$o_https,	  'https'	  => \$o_https,
       'V'     => \$o_version,     'version'       => \$o_version,
@@ -166,9 +174,9 @@ if (defined($o_https)) {
 }
 
 if (!defined($o_port)) {
-  $request = HTTP::Request->new(GET => $o_proto.$o_host.'/server-status');
+  $request = HTTP::Request->new(GET => $o_proto.$o_host.$o_uri);
 } else {
-  $request = HTTP::Request->new(GET => $o_proto.$o_host.':'.$o_port.'/server-status');
+  $request = HTTP::Request->new(GET => $o_proto.$o_host.':'.$o_port.$o_uri);
 }
 
 $response = $ua->request($request);
